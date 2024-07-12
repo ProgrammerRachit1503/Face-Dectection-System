@@ -18,7 +18,7 @@ class Student:
     f_lbl.place(x=0, y=0, width=640, height=200)
 
     # Second Image
-    img1 = Image.open(r"Images/attendence.jpeg")
+    img1 = Image.open(r"Images/attendance.jpeg")
     img1 = img1.resize((640, 200), Image.LANCZOS)
     self.photoimg1 = ImageTk.PhotoImage(img1)
 
@@ -59,32 +59,32 @@ class Student:
     f_lbl = Label(left_Frame, image = self.photoimg_left)
     f_lbl.place(x=10, y=0, width=920, height=150)
 
-    # courent coure
-    current_course_Frame = LabelFrame(left_Frame, bd=2, bg = "White", relief="ridge", text="Current Cource Information", font=("times new roman", 16, "bold") )
+    # current course
+    current_course_Frame = LabelFrame(left_Frame, bd=2, bg = "White", relief="ridge", text="Current Course Information", font=("times new roman", 16, "bold") )
     current_course_Frame.place(x=10, y=160, width=920, height=150)
 
     # Department
-    dep_lable = Label(current_course_Frame, text = "Departmennt", font=("times new roman", 15, "bold"), bg="white")
-    dep_lable.grid(row = 0, column = 0, padx=10, pady=15, sticky=W)
+    dep_lbl = Label(current_course_Frame, text = "Department", font=("times new roman", 15, "bold"), bg="white")
+    dep_lbl.grid(row = 0, column = 0, padx=10, pady=15, sticky=W)
 
     dep_combo = ttk.Combobox(current_course_Frame, font=("times new roman", 15, "bold"), state="readonly")
     dep_combo["values"]=("Select the Department","IT","Computers","Medical","Civil","Electrical")
     dep_combo.current(0)
     dep_combo.grid(row = 0, column = 1, padx=5, pady=15, sticky=W)
 
-    #Cource
-    cource_lable = Label(current_course_Frame, text = "Course", font=("times new roman", 15, "bold"), bg="white")
-    cource_lable.grid(row = 0, column = 2, padx=10, pady=15, sticky=W)
+    #Course
+    course_lbl = Label(current_course_Frame, text = "Course", font=("times new roman", 15, "bold"), bg="white")
+    course_lbl.grid(row = 0, column = 2, padx=10, pady=15, sticky=W)
 
-    cource_combo = ttk.Combobox(current_course_Frame, font=("times new roman", 15, "bold"), state="readonly")
-    cource_combo["values"]=("Select the Course","B.Tech CSE","BCA (AIML)","B.Tech Civil","B.Phama","B.Tech EE")
-    cource_combo.current(0)
-    cource_combo.grid(row = 0, column = 3, padx=5, pady=15, sticky=W)
+    course_combo = ttk.Combobox(current_course_Frame, font=("times new roman", 15, "bold"), state="readonly")
+    course_combo["values"]=("Select the Course","B.Tech CSE","BCA (AI/ML)","B.Tech Civil","B.Pharma","B.Tech EE")
+    course_combo.current(0)
+    course_combo.grid(row = 0, column = 3, padx=5, pady=15, sticky=W)
 
 
     # Year
-    year_lable = Label(current_course_Frame, text = "Year", font=("times new roman", 15, "bold"), bg="white")
-    year_lable.grid(row = 1, column = 0, padx=10, pady=15, sticky=W)
+    year_lbl = Label(current_course_Frame, text = "Year", font=("times new roman", 15, "bold"), bg="white")
+    year_lbl.grid(row = 1, column = 0, padx=10, pady=15, sticky=W)
 
     year_combo = ttk.Combobox(current_course_Frame, font=("times new roman", 15, "bold"), state="readonly")
     year_combo["values"]=("Select the Year","2020","2021","2022","2023","2024")
@@ -93,8 +93,8 @@ class Student:
 
 
     # semester
-    sem_lable = Label(current_course_Frame, text = "Semester", font=("times new roman", 15, "bold"), bg="white")
-    sem_lable.grid(row = 1, column = 2, padx=10, pady=15, sticky=W)
+    sem_lbl = Label(current_course_Frame, text = "Semester", font=("times new roman", 15, "bold"), bg="white")
+    sem_lbl.grid(row = 1, column = 2, padx=10, pady=15, sticky=W)
 
     sem_combo = ttk.Combobox(current_course_Frame, font=("times new roman", 15, "bold"), state="readonly")
     sem_combo["values"]=("Select the Semester","1st","2nd","3rd","4th")
@@ -106,37 +106,37 @@ class Student:
     class_Student_Frame = LabelFrame(left_Frame, bd=2, bg = "White", relief="ridge", text="Class Student Information", font=("times new roman", 16, "bold") )
     class_Student_Frame.place(x=10, y=320, width=920, height=400)
 
-    #Student ID Lable
-    # Student_ID_lable = Label(class_Student_Frame, text = "Student ID:", font=("times new roman", 15, "bold"), bg="white")
-    # Student_ID_lable.grid(row = 0, column = 0, padx=10, pady=15, sticky=W)
+    #Student ID Label
+    # Student_ID_lbl = Label(class_Student_Frame, text = "Student ID:", font=("times new roman", 15, "bold"), bg="white")
+    # Student_ID_lbl.grid(row = 0, column = 0, padx=10, pady=15, sticky=W)
 
     # student_ID_entry = ttk.Entry(class_Student_Frame, font=("times new roman", 15, "bold"))
     # student_ID_entry.grid(row = 0, column=1, padx=10, pady=15, sticky=W)
 
     # student name
-    Student_name_lable = Label(class_Student_Frame, text = "Student Name:", font=("times new roman", 15, "bold"), bg="white")
-    Student_name_lable.grid(row = 0, column = 0, padx=10, pady=15, sticky=W)
+    Student_name_lbl = Label(class_Student_Frame, text = "Student Name:", font=("times new roman", 15, "bold"), bg="white")
+    Student_name_lbl.grid(row = 0, column = 0, padx=10, pady=15, sticky=W)
 
     student_name_entry = ttk.Entry(class_Student_Frame, font=("times new roman", 15, "bold"))
     student_name_entry.grid(row = 0, column=1, padx=10, pady=15, sticky=W)
 
     # enrollment no
-    Student_Enrollment_no_lable = Label(class_Student_Frame, text = "Enrollment No:", font=("times new roman", 15, "bold"), bg="white")
-    Student_Enrollment_no_lable.grid(row = 0, column = 2, padx=10, pady=15, sticky=W)
+    Student_Enrollment_no_lbl = Label(class_Student_Frame, text = "Enrollment No:", font=("times new roman", 15, "bold"), bg="white")
+    Student_Enrollment_no_lbl.grid(row = 0, column = 2, padx=10, pady=15, sticky=W)
 
     student_Enrollment_no_entry = ttk.Entry(class_Student_Frame, font=("times new roman", 15, "bold"))
     student_Enrollment_no_entry.grid(row = 0, column=3, padx=10, pady=15, sticky=W)
 
-    # cource
-    Student_cource_lable = Label(class_Student_Frame, text = "Student Cource:", font=("times new roman", 15, "bold"), bg="white")
-    Student_cource_lable.grid(row = 1, column = 0, padx=10, pady=15, sticky=W)
+    # course
+    Student_course_lbl = Label(class_Student_Frame, text = "Student course:", font=("times new roman", 15, "bold"), bg="white")
+    Student_course_lbl.grid(row = 1, column = 0, padx=10, pady=15, sticky=W)
 
-    student_cource_entry = ttk.Entry(class_Student_Frame, font=("times new roman", 15, "bold"))
-    student_cource_entry.grid(row = 1, column=1, padx=10, pady=15, sticky=W)
+    student_course_entry = ttk.Entry(class_Student_Frame, font=("times new roman", 15, "bold"))
+    student_course_entry.grid(row = 1, column=1, padx=10, pady=15, sticky=W)
 
     # gender
-    Student_gender_lable = Label(class_Student_Frame, text = "Gender:", font=("times new roman", 15, "bold"), bg="white")
-    Student_gender_lable.grid(row = 1, column = 2, padx=10, pady=15, sticky=W)
+    Student_gender_lbl = Label(class_Student_Frame, text = "Gender:", font=("times new roman", 15, "bold"), bg="white")
+    Student_gender_lbl.grid(row = 1, column = 2, padx=10, pady=15, sticky=W)
     
     Student_gender_entry = ttk.Combobox(class_Student_Frame, font=("times new roman", 15, "bold"), state="readonly")
     Student_gender_entry["values"]=("Select your Gender","Male","Female")
@@ -144,29 +144,29 @@ class Student:
     Student_gender_entry.grid(row = 1, column = 3, padx=5, pady=15, sticky=W)
 
     # Email
-    Student_email_lable = Label(class_Student_Frame, text = "Student E-Mail:", font=("times new roman", 15, "bold"), bg="white")
-    Student_email_lable.grid(row = 2, column = 0, padx=10, pady=15, sticky=W)
+    Student_email_lbl = Label(class_Student_Frame, text = "Student E-Mail:", font=("times new roman", 15, "bold"), bg="white")
+    Student_email_lbl.grid(row = 2, column = 0, padx=10, pady=15, sticky=W)
 
     student_email_entry = ttk.Entry(class_Student_Frame, font=("times new roman", 15, "bold"))
     student_email_entry.grid(row = 2, column=1, padx=10, pady=15, sticky=W)
 
     # phone number
-    Student_Number_lable = Label(class_Student_Frame, text = "Phone Number:", font=("times new roman", 15, "bold"), bg="white")
-    Student_Number_lable.grid(row = 2, column = 2, padx=10, pady=15, sticky=W)
+    Student_Number_lbl = Label(class_Student_Frame, text = "Phone Number:", font=("times new roman", 15, "bold"), bg="white")
+    Student_Number_lbl.grid(row = 2, column = 2, padx=10, pady=15, sticky=W)
 
     student_Number_entry = ttk.Entry(class_Student_Frame, font=("times new roman", 15, "bold"))
     student_Number_entry.grid(row = 2, column=3, padx=10, pady=15, sticky=W)
 
     # address
-    Student_Address_lable = Label(class_Student_Frame, text = "Address:", font=("times new roman", 15, "bold"), bg="white")
-    Student_Address_lable.grid(row = 3, column = 0, padx=10, pady=15, sticky=W)
+    Student_Address_lbl = Label(class_Student_Frame, text = "Address:", font=("times new roman", 15, "bold"), bg="white")
+    Student_Address_lbl.grid(row = 3, column = 0, padx=10, pady=15, sticky=W)
 
     student_Address_entry = ttk.Entry(class_Student_Frame, font=("times new roman", 15, "bold"))
     student_Address_entry.grid(row = 3, column=1, padx=10, pady=15, sticky=W)
 
     # Teacher name
-    Student_Teacher_name_lable = Label(class_Student_Frame, text = "Teacher Name:", font=("times new roman", 15, "bold"), bg="white")
-    Student_Teacher_name_lable.grid(row = 3, column = 2, padx=10, pady=15, sticky=W)
+    Student_Teacher_name_lbl = Label(class_Student_Frame, text = "Teacher Name:", font=("times new roman", 15, "bold"), bg="white")
+    Student_Teacher_name_lbl.grid(row = 3, column = 2, padx=10, pady=15, sticky=W)
 
     student_Teacher_name_entry = ttk.Entry(class_Student_Frame, font=("times new roman", 15, "bold"))
     student_Teacher_name_entry.grid(row = 3, column=3, padx=10, pady=15, sticky=W)
@@ -196,7 +196,7 @@ class Student:
     delete_btn=Button(btn_Frame, text="Delete", font=("times new roman", 15, "bold"), bg="blue", fg="white", width=18)
     delete_btn.grid(row=0,column=3)
 
-    # butten frame 2
+    # button frame 2
     btn_Frame_2=Frame(class_Student_Frame,bd=2, relief=RIDGE,bg="white")
     btn_Frame_2.place(x=7, y=310, width=900,height=40)
 
