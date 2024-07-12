@@ -18,7 +18,7 @@ class Face_Recognition_System:
     f_lbl.place(x=0, y=0, width=640, height=200)
 
     # Second Image
-    img1 = Image.open(r"Images/attendence.jpeg")
+    img1 = Image.open(r"Images/attendance.jpeg")
     img1 = img1.resize((640, 200), Image.LANCZOS)
     self.photoimg1 = ImageTk.PhotoImage(img1)
 
@@ -67,14 +67,14 @@ class Face_Recognition_System:
     b2_2.place(x=620, y=300, width=220, height=40)
 
     # Attendance Button
-    img6 = Image.open(r"Images/attendence System.jpeg")
+    img6 = Image.open(r"Images/attendance System.jpeg")
     img6 = img6.resize((220, 220), Image.LANCZOS)
     self.photoimg6 = ImageTk.PhotoImage(img6)
 
     b3 = Button(bg_img, image=self.photoimg6, cursor="hand2")
     b3.place(x=1020, y=100, width=220, height=220)
 
-    b3_3 = Button(bg_img, text="Face Detector", cursor="hand2", font=("times new roman", 15, "bold"), bg="darkblue", fg="white")
+    b3_3 = Button(bg_img, text="Attendance", cursor="hand2", font=("times new roman", 15, "bold"), bg="darkblue", fg="white")
     b3_3.place(x=1020, y=300, width=220, height=40)
 
     # Help Button
@@ -99,15 +99,15 @@ class Face_Recognition_System:
     b5_5 = Button(bg_img, text="Train Face", cursor="hand2", font=("times new roman", 15, "bold"), bg="darkblue", fg="white")
     b5_5.place(x=200, y=650, width=220, height=40)
 
-    # Developer Button
-    img9 = Image.open(r"Images/developer.webp")
+    # Photos Button
+    img9 = Image.open(r"images/multi face.jpg")
     img9 = img9.resize((220, 220), Image.LANCZOS)
     self.photoimg9 = ImageTk.PhotoImage(img9)
 
     b6 = Button(bg_img, image=self.photoimg9, cursor="hand2")
     b6.place(x=620, y=450, width=220, height=220)
 
-    b6_6 = Button(bg_img, text="Developer", cursor="hand2", font=("times new roman", 15, "bold"), bg="darkblue", fg="white")
+    b6_6 = Button(bg_img, text="Photos", cursor="hand2", font=("times new roman", 15, "bold"), bg="darkblue", fg="white")
     b6_6.place(x=620, y=650, width=220, height=40)
 
     # Developer Button
