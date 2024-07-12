@@ -10,7 +10,7 @@ class Face_Recognition_System:
     self.root.title("Face Recognition System")
 
     # First Image
-    img = Image.open(r"Images/GD Goenka University.jpg")
+    img = Image.open(r"Images/face.jpeg")
     img = img.resize((640, 200), Image.LANCZOS)
     self.photon = ImageTk.PhotoImage(img)
 
@@ -18,7 +18,7 @@ class Face_Recognition_System:
     f_lbl.place(x=0, y=0, width=640, height=200)
 
     # Second Image
-    img1 = Image.open(r"Images/GD Goenka University.jpg")
+    img1 = Image.open(r"Images/attendence.jpeg")
     img1 = img1.resize((640, 200), Image.LANCZOS)
     self.photoimg1 = ImageTk.PhotoImage(img1)
 
@@ -26,7 +26,7 @@ class Face_Recognition_System:
     f_lbl.place(x=640, y=0, width=640, height=200)
 
     #  Third Image
-    img2 = Image.open(r"Images/GD Goenka University.jpg")
+    img2 = Image.open(r"Images/face.jpeg")
     img2 = img2.resize((640, 200), Image.LANCZOS)
     self.photoimg2 = ImageTk.PhotoImage(img2)
 
@@ -45,7 +45,7 @@ class Face_Recognition_System:
     title_lbl.place(x=0, y=0, width=1920, height=50)
 
     # Student Button
-    img4 = Image.open(r"Images/GD Goenka University.jpg")
+    img4 = Image.open(r"Images/students.jpg")
     img4 = img4.resize((220, 220), Image.LANCZOS)
     self.photoimg4 = ImageTk.PhotoImage(img4)
 
@@ -56,7 +56,7 @@ class Face_Recognition_System:
     b1_1.place(x=200, y=300, width=220, height=40)
 
     # Detect Face Button
-    img5 = Image.open(r"Images/GD Goenka University.jpg")
+    img5 = Image.open(r"Images/detection.jpeg")
     img5 = img5.resize((220, 220), Image.LANCZOS)
     self.photoimg5 = ImageTk.PhotoImage(img5)
 
@@ -67,7 +67,7 @@ class Face_Recognition_System:
     b2_2.place(x=620, y=300, width=220, height=40)
 
     # Attendance Button
-    img6 = Image.open(r"Images/GD Goenka University.jpg")
+    img6 = Image.open(r"Images/attendence System.jpeg")
     img6 = img6.resize((220, 220), Image.LANCZOS)
     self.photoimg6 = ImageTk.PhotoImage(img6)
 
@@ -78,7 +78,7 @@ class Face_Recognition_System:
     b3_3.place(x=1020, y=300, width=220, height=40)
 
     # Help Button
-    img7 = Image.open(r"Images/GD Goenka University.jpg")
+    img7 = Image.open(r"Images/help.png")
     img7 = img7.resize((220, 220), Image.LANCZOS)
     self.photoimg7 = ImageTk.PhotoImage(img7)
 
@@ -89,7 +89,7 @@ class Face_Recognition_System:
     b4_4.place(x=1420, y=300, width=220, height=40)
 
     # Train Face Button
-    img8 = Image.open(r"Images/GD Goenka University.jpg")
+    img8 = Image.open(r"Images/training.jpeg")
     img8 = img8.resize((220, 220), Image.LANCZOS)
     self.photoimg8 = ImageTk.PhotoImage(img8)
 
@@ -100,7 +100,7 @@ class Face_Recognition_System:
     b5_5.place(x=200, y=650, width=220, height=40)
 
     # Developer Button
-    img9 = Image.open(r"Images/GD Goenka University.jpg")
+    img9 = Image.open(r"Images/developer.webp")
     img9 = img9.resize((220, 220), Image.LANCZOS)
     self.photoimg9 = ImageTk.PhotoImage(img9)
 
@@ -111,7 +111,7 @@ class Face_Recognition_System:
     b6_6.place(x=620, y=650, width=220, height=40)
 
     # Developer Button
-    img10 = Image.open(r"Images/GD Goenka University.jpg")
+    img10 = Image.open(r"Images/developer.webp")
     img10 = img10.resize((220, 220), Image.LANCZOS)
     self.photoimg10 = ImageTk.PhotoImage(img10)
 
@@ -122,7 +122,7 @@ class Face_Recognition_System:
     b7_6.place(x=1020, y=650, width=220, height=40)
 
     # Exit Button
-    img11 = Image.open(r"Images/GD Goenka University.jpg")
+    img11 = Image.open(r"Images/exit.jpeg")
     img11 = img11.resize((220, 220), Image.LANCZOS)
     self.photoimg11 = ImageTk.PhotoImage(img11)
 
