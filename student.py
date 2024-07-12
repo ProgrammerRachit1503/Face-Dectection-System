@@ -139,9 +139,9 @@ class Student:
     Student_gender_lbl.grid(row = 1, column = 2, padx=10, pady=15, sticky=W)
     
     Student_gender_entry = ttk.Combobox(class_Student_Frame, font=("times new roman", 15, "bold"), state="readonly")
-    Student_gender_entry["values"]=("Select your Gender","Male","Female")
+    Student_gender_entry["values"]=("Select your Gender","Male","Female","Others")
     Student_gender_entry.current(0)
-    Student_gender_entry.grid(row = 1, column = 3, padx=5, pady=15, sticky=W)
+    Student_gender_entry.grid(row = 1, column = 3, padx=10, pady=15, sticky=W)
 
     # Email
     Student_email_lbl = Label(class_Student_Frame, text = "Student E-Mail:", font=("times new roman", 15, "bold"), bg="white")
@@ -151,7 +151,7 @@ class Student:
     student_email_entry.grid(row = 2, column=1, padx=10, pady=15, sticky=W)
 
     # phone number
-    Student_Number_lbl = Label(class_Student_Frame, text = "Phone Number:", font=("times new roman", 15, "bold"), bg="white")
+    Student_Number_lbl = Label(class_Student_Frame, text = "Student Phone Number:", font=("times new roman", 15, "bold"), bg="white")
     Student_Number_lbl.grid(row = 2, column = 2, padx=10, pady=15, sticky=W)
 
     student_Number_entry = ttk.Entry(class_Student_Frame, font=("times new roman", 15, "bold"))
@@ -174,7 +174,6 @@ class Student:
     # Radio Buttons
     radio_btn_1 = ttk.Radiobutton(class_Student_Frame, text="Take Photo Sample", value="Yes")
     radio_btn_1.grid(row=4, column=0)
-
 
     radio_btn_2 = ttk.Radiobutton(class_Student_Frame, text="No Photo Sample", value="Yes")
     radio_btn_2.grid(row=4, column=1)
@@ -210,6 +209,79 @@ class Student:
     # Right Frame
     right_Frame = LabelFrame(main_frame, bd=2, bg = "White", relief="ridge", text="Student Details", font=("times new roman", 16, "bold") )
     right_Frame.place(x=960, y=10, width=940, height=760)
+
+    img_right = Image.open(r"images/students.jpg")  #change the image
+    img_right = img_right.resize((920, 230), Image.LANCZOS)
+    self.photoimg_right = ImageTk.PhotoImage(img_right)
+
+    f_lbl = Label(right_Frame, image = self.photoimg_right)
+    f_lbl.place(x=10, y=0, width=920, height=150)
+
+    # ================ Search System ================
+    Search_Frame = LabelFrame(right_Frame, bd=2, bg = "White", relief="ridge", text="Search System", font=("times new roman", 15, "bold"))
+    Search_Frame.place(x=10, y=160, width=920, height=70)
+
+    search_lbl = Label(Search_Frame, text = "Search By :-", font=("times new roman", 12), bg="pink", fg="blue")
+    search_lbl.grid(row = 0, column = 0, padx=10, pady=5, sticky=W)
+
+    search_combo = ttk.Combobox(Search_Frame, font=("times new roman", 12), state="readonly", width=12)
+    search_combo["values"]=("Select","Enrollment No","Phone No")
+    search_combo.current(0)
+    search_combo.grid(row = 0, column = 1, padx=2, pady=5, sticky=W)
+
+    search_entry = ttk.Entry(Search_Frame, font=("times new roman", 12), width=50)
+    search_entry.grid(row = 0, column=2, padx=10, pady=5, sticky=W)
+
+    search_btn=Button(Search_Frame, text="Search", font=("times new roman", 10, "bold"), bg="pink", fg="blue", width=12)
+    search_btn.grid(row=0,column=3, padx=5)
+    
+    show_all_btn=Button(Search_Frame, text="Show All", font=("times new roman", 10, "bold"), bg="pink", fg="blue", width=12)
+    show_all_btn.grid(row=0,column=4, padx=5)
+
+    # Table Frame
+    Table_Frame = Frame(right_Frame, bd=2, bg = "White", relief="ridge")
+    Table_Frame.place(x=10, y=240, width=920, height=400)
+
+    scroll_x = ttk.Scrollbar(Table_Frame, orient=HORIZONTAL)
+    scroll_y = ttk.Scrollbar(Table_Frame, orient=VERTICAL)
+
+    self.student_table = ttk.Treeview(Table_Frame, column=("Department", "Course", "Year", "Semester", "Student Name", "Enrollment No.", "Student Course", "Gender", "Student E-Mail", "Student Phone No.", "Address", "Teacher Name", "Photo"),xscrollcommand=scroll_x.set,yscrollcommand=scroll_y.set)
+
+    scroll_x.pack(side=BOTTOM,fill=X)
+    scroll_x.config(command=self.student_table.xview)
+    scroll_y.pack(side=RIGHT,fill=Y)
+    scroll_y.config(command=self.student_table.yview)
+
+    self.student_table.heading("Department", text="Department")
+    self.student_table.heading("Course", text="Course")
+    self.student_table.heading("Year", text="Year")
+    self.student_table.heading("Semester", text="Semester")
+    self.student_table.heading("Student Name", text="Student Name")
+    self.student_table.heading("Enrollment No.", text="Enrollment No.")
+    self.student_table.heading("Student Course", text="Student Course")
+    self.student_table.heading("Gender", text="Gender")
+    self.student_table.heading("Student E-Mail", text="Student E-Mail")
+    self.student_table.heading("Student Phone No.", text="Student Phone No.")
+    self.student_table.heading("Address", text="Address")
+    self.student_table.heading("Teacher Name", text="Teacher Name")
+    self.student_table.heading("Photo", text="PhotoSampleStatus")
+    self.student_table["show"] = "headings"
+
+    self.student_table.column("Department", width=100)
+    self.student_table.column("Course", width=100)
+    self.student_table.column("Year", width=100)
+    self.student_table.column("Semester", width=100)
+    self.student_table.column("Student Name", width=100)
+    self.student_table.column("Enrollment No.", width=100)
+    self.student_table.column("Student Course", width=100)
+    self.student_table.column("Gender", width=100)
+    self.student_table.column("Student E-Mail", width=100)
+    self.student_table.column("Student Phone No.", width=100)
+    self.student_table.column("Address", width=100)
+    self.student_table.column("Teacher Name", width=100)
+    self.student_table.column("Photo", width=150)
+
+    self.student_table.pack(fill=BOTH, expand=1)
 
 
 def main() -> None:
