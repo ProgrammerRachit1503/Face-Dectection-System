@@ -1,6 +1,7 @@
 from tkinter import *
-from tkinter import ttk
+from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
+import mysql.connector
 
 
 class Student:
@@ -198,7 +199,7 @@ class Student:
     btn_Frame=Frame(class_Student_Frame,bd=2, relief=RIDGE,bg="white")
     btn_Frame.place(x=7, y=265, width=900,height=40)
 
-    save_btn=Button(btn_Frame, text="Save", font=("times new roman", 15, "bold"), bg="blue", fg="white", width=18)
+    save_btn=Button(btn_Frame, text="Save", command=self.add_data, font=("times new roman", 15, "bold"), bg="blue", fg="white", width=18)
     save_btn.grid(row=0,column=0)
 
     
@@ -301,7 +302,10 @@ class Student:
 
   # ================ Function Declaration ================
   def add_data(self):
-    if self.var_department.get() == "Select the Department" or self.var_course.get() == "Select the Course":
+    if self.var_department.get() == "Select the Department" or self.var_student_name.get() == "" or self.var_enrollment_no == "":
+      messagebox.showerror("Error",'All fields are required', parent = self.root)
+    else:
+      pass
 
 
 def main() -> None:
