@@ -187,12 +187,11 @@ class Student:
     student_Teacher_name_entry.grid(row = 3, column=3, padx=10, pady=15, sticky=W)
 
     # Radio Buttons
-    self.var_radio1 = StringVar()
-    radio_btn_1 = ttk.Radiobutton(class_Student_Frame, textvariable=self.var_radio1, text="Take Photo Sample", value="Yes")
+    self.var_radio = StringVar()
+    radio_btn_1 = ttk.Radiobutton(class_Student_Frame, variable=self.var_radio, text="Take Photo Sample", value="Yes")
     radio_btn_1.grid(row=4, column=0)
 
-    self.var_radio2 = StringVar()
-    radio_btn_2 = ttk.Radiobutton(class_Student_Frame, textvariable=self.var_radio2, text="No Photo Sample", value="No")
+    radio_btn_2 = ttk.Radiobutton(class_Student_Frame, variable=self.var_radio, text="No Photo Sample", value="No")
     radio_btn_2.grid(row=4, column=1)
 
     # button Frame 1
@@ -321,7 +320,7 @@ class Student:
                                                                                                             self.var_stu_phone.get(),
                                                                                                             self.var_address.get(),
                                                                                                             self.var_teacher.get(),
-                                                                                                            self.var_radio1.get()
+                                                                                                            self.var_radio.get()
                                                                                                           )
                           )
         conn.commit()
