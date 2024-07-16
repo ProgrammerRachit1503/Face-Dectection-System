@@ -305,7 +305,32 @@ class Student:
     if self.var_department.get() == "Select the Department" or self.var_student_name.get() == "" or self.var_enrollment_no == "":
       messagebox.showerror("Error",'All fields are required', parent = self.root)
     else:
-      pass
+      try:
+        conn = mysql.connector.connect(host = "localhost", username = "root", password = "7575", database ="face_recognizer")
+        my_cursor = conn.cursor()
+        my_cursor.execute("insert into student values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", (
+                                                                                                            self.var_department.get(),
+                                                                                                            self.var_course.get(),
+                                                                                                            self.var_year.get(),
+                                                                                                            self.var_semester.get(),
+                                                                                                            self.var_student_name.get(),
+                                                                                                            self.var_enrollment_no.get(),
+                                                                                                            self.var_stu_course.get(),
+                                                                                                            self.var_gender.get(),
+                                                                                                            self.var_stu_email.get(),
+                                                                                                            self.var_stu_phone.get(),
+                                                                                                            self.var_address.get(),
+                                                                                                            self.var_teacher.get(),
+                                                                                                            self.var_radio1.get()
+                                                                                                          )
+                          )
+        conn.commit()
+        conn.close()
+        messagebox.showinfo("Success", "Student details has been added Successfully", parent = self.root)
+      
+      except Exception as es:
+        messagebox.showerror("Error",f"Due to :{str(es)}", parent = self.root)
+
 
 
 def main() -> None:
