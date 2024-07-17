@@ -147,7 +147,7 @@ class Student:
     Student_Division_lbl.grid(row = 1, column = 0, padx=10, pady=15, sticky=W)
 
     Student_Division_entry = ttk.Combobox(class_Student_Frame, textvariable=self.var_stu_division, font=("times new roman", 15, "bold"), state="readonly", width=18)
-    Student_Division_entry["values"]=("A","B","C")
+    Student_Division_entry["values"]=("Select the Division","A","B","C")
     Student_Division_entry.current(0)
     Student_Division_entry.grid(row = 1, column = 1, padx=10, pady=15, sticky=W)
 
@@ -207,10 +207,10 @@ class Student:
     update_btn=Button(btn_Frame, text="Update", command=self.update_data, font=("times new roman", 15, "bold"), bg="blue", fg="white", width=18)
     update_btn.grid(row=0,column=1)
     
-    reset_btn=Button(btn_Frame, text="Reset", font=("times new roman", 15, "bold"), bg="blue", fg="white", width=18)
+    reset_btn=Button(btn_Frame, text="Reset", command=self.reset_data, font=("times new roman", 15, "bold"), bg="blue", fg="white", width=18)
     reset_btn.grid(row=0,column=2)
     
-    delete_btn=Button(btn_Frame, text="Delete", font=("times new roman", 15, "bold"), bg="blue", fg="white", width=18)
+    delete_btn=Button(btn_Frame, text="Delete", command=self.delete_data, font=("times new roman", 15, "bold"), bg="blue", fg="white", width=18)
     delete_btn.grid(row=0,column=3)
 
     # button frame 2
@@ -398,17 +398,56 @@ class Student:
                               self.var_enrollment_no.get()
                             )
                         )
-        else:
-          if not update:
-            return
+        
+        elif not update:
+          return
 
-        messagebox.showinfo("Success", "Student Details Updated successfully", parent = self.root)
+        messagebox.showinfo("Update", "Student Details Updated successfully", parent = self.root)
         conn.commit()
         self.fetch_data()
         conn.close()
       except Exception as es:
         messagebox.showerror("Error",f"Due to :{str(es)}", parent = self.root)
+  
+  # ================= Delete Data =================
+  def delete_data(self):
+    if self.var_enrollment_no.get() == "":
+      messagebox.showerror("Error","Enrollment number is required", parent = self.root)
+    else:
+      try:
+        delete = messagebox.askyesno("Delete", "Are you sure you want to delete student details?", parent = self.root)
+        if delete > 0:
+          conn = mysql.connector.connect(host = "localhost", username = "root", password = "7575", database ="face_recognizer")
+          my_cursor = conn.cursor()
+          my_cursor.execute("delete from student where EnrollmentNumber=%s", (self.var_enrollment_no.get(),))
+        
+        elif not delete:
+          return
+        
+        messagebox.showinfo("Delete", "Student Details deleted successfully", parent = self.root)
+        conn.commit()
+        self.fetch_data()
+        self.reset_data()
+        conn.close()
+      
+      except EXCEPTION as es:
+        messagebox.showerror("Error",f"Due to :{str(es)}", parent = self.root)
 
+  # ================= Delete Data =================
+  def reset_data(self):
+    self.var_department.set("Select the Department"),
+    self.var_course.set("Select the Course"),
+    self.var_year.set("Select the Year"),
+    self.var_semester.set("Select the Semester"),
+    self.var_student_name.set(""),
+    self.var_enrollment_no.set(""),
+    self.var_stu_division.set("Select the Division"),
+    self.var_gender.set("Male"),
+    self.var_stu_email.set(""),
+    self.var_stu_phone.set(""),
+    self.var_address.set(""),
+    self.var_teacher.set(""),
+    self.var_radio.set("")
 
 def main() -> None:
   root = Tk()
