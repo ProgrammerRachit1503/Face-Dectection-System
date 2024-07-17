@@ -17,7 +17,7 @@ class Student:
     self.var_semester = StringVar()
     self.var_student_name = StringVar()
     self.var_enrollment_no = StringVar()
-    self.var_stu_course = StringVar()
+    self.var_stu_division = StringVar()
     self.var_gender = StringVar()
     self.var_stu_email = StringVar()
     self.var_stu_phone = StringVar()
@@ -142,19 +142,21 @@ class Student:
     student_Enrollment_no_entry = ttk.Entry(class_Student_Frame, textvariable=self.var_enrollment_no, font=("times new roman", 15, "bold"))
     student_Enrollment_no_entry.grid(row = 0, column=3, padx=10, pady=15, sticky=W)
 
-    # Student course
-    Student_course_lbl = Label(class_Student_Frame, text = "Student course:", font=("times new roman", 15, "bold"), bg="white")
-    Student_course_lbl.grid(row = 1, column = 0, padx=10, pady=15, sticky=W)
+    # Student Division
+    Student_Division_lbl = Label(class_Student_Frame, text = "Student Division:", font=("times new roman", 15, "bold"), bg="white")
+    Student_Division_lbl.grid(row = 1, column = 0, padx=10, pady=15, sticky=W)
 
-    student_course_entry = ttk.Entry(class_Student_Frame, textvariable=self.var_stu_course, font=("times new roman", 15, "bold"))
-    student_course_entry.grid(row = 1, column=1, padx=10, pady=15, sticky=W)
+    Student_Division_entry = ttk.Combobox(class_Student_Frame, textvariable=self.var_stu_division, font=("times new roman", 15, "bold"), state="readonly", width=18)
+    Student_Division_entry["values"]=("A","B","C")
+    Student_Division_entry.current(0)
+    Student_Division_entry.grid(row = 1, column = 1, padx=10, pady=15, sticky=W)
 
     # gender
     Student_gender_lbl = Label(class_Student_Frame, text = "Gender:", font=("times new roman", 15, "bold"), bg="white")
     Student_gender_lbl.grid(row = 1, column = 2, padx=10, pady=15, sticky=W)
     
-    Student_gender_entry = ttk.Combobox(class_Student_Frame, textvariable=self.var_gender, font=("times new roman", 15, "bold"), state="readonly")
-    Student_gender_entry["values"]=("Select your Gender","Male","Female","Others")
+    Student_gender_entry = ttk.Combobox(class_Student_Frame, textvariable=self.var_gender, font=("times new roman", 15, "bold"), state="readonly", width=18)
+    Student_gender_entry["values"]=("Male","Female","Others")
     Student_gender_entry.current(0)
     Student_gender_entry.grid(row = 1, column = 3, padx=10, pady=15, sticky=W)
 
@@ -202,7 +204,7 @@ class Student:
     save_btn.grid(row=0,column=0)
 
     
-    update_btn=Button(btn_Frame, text="Update", font=("times new roman", 15, "bold"), bg="blue", fg="white", width=18)
+    update_btn=Button(btn_Frame, text="Update", command=self.update_data, font=("times new roman", 15, "bold"), bg="blue", fg="white", width=18)
     update_btn.grid(row=0,column=1)
     
     reset_btn=Button(btn_Frame, text="Reset", font=("times new roman", 15, "bold"), bg="blue", fg="white", width=18)
@@ -261,7 +263,7 @@ class Student:
     scroll_x = ttk.Scrollbar(Table_Frame, orient=HORIZONTAL)
     scroll_y = ttk.Scrollbar(Table_Frame, orient=VERTICAL)
 
-    self.student_table = ttk.Treeview(Table_Frame, column=("Department", "Course", "Year", "Semester", "Student Name", "Enrollment No.", "Student Course", "Gender", "Student E-Mail", "Student Phone No.", "Address", "Teacher Name", "Photo"),xscrollcommand=scroll_x.set,yscrollcommand=scroll_y.set)
+    self.student_table = ttk.Treeview(Table_Frame, column=("Department", "Course", "Year", "Semester", "Student Name", "Enrollment No.", "Student Division", "Gender", "Student E-Mail", "Student Phone No.", "Address", "Teacher Name", "Photo"),xscrollcommand=scroll_x.set,yscrollcommand=scroll_y.set)
 
     scroll_x.pack(side=BOTTOM,fill=X)
     scroll_x.config(command=self.student_table.xview)
@@ -274,13 +276,13 @@ class Student:
     self.student_table.heading("Semester", text="Semester")
     self.student_table.heading("Student Name", text="Student Name")
     self.student_table.heading("Enrollment No.", text="Enrollment No.")
-    self.student_table.heading("Student Course", text="Student Course")
+    self.student_table.heading("Student Division", text="Student Division")
     self.student_table.heading("Gender", text="Gender")
     self.student_table.heading("Student E-Mail", text="Student E-Mail")
     self.student_table.heading("Student Phone No.", text="Student Phone No.")
     self.student_table.heading("Address", text="Address")
     self.student_table.heading("Teacher Name", text="Teacher Name")
-    self.student_table.heading("Photo", text="PhotoSampleStatus")
+    self.student_table.heading("Photo", text="Photo Sample Status")
     self.student_table["show"] = "headings"
 
     self.student_table.column("Department", width=100)
@@ -289,7 +291,7 @@ class Student:
     self.student_table.column("Semester", width=100)
     self.student_table.column("Student Name", width=100)
     self.student_table.column("Enrollment No.", width=100)
-    self.student_table.column("Student Course", width=100)
+    self.student_table.column("Student Division", width=100)
     self.student_table.column("Gender", width=100)
     self.student_table.column("Student E-Mail", width=100)
     self.student_table.column("Student Phone No.", width=100)
@@ -298,8 +300,12 @@ class Student:
     self.student_table.column("Photo", width=150)
 
     self.student_table.pack(fill=BOTH, expand=1)
+    self.student_table.bind("<ButtonRelease>", self.get_cursor)
+    self.fetch_data()
 
-  # ================ Function Declaration ================
+# ================ Function Declaration ================
+
+  # ================  Adding Data ================
   def add_data(self):
     if self.var_department.get() == "Select the Department" or self.var_student_name.get() == "" or self.var_enrollment_no == "":
       messagebox.showerror("Error",'All fields are required', parent = self.root)
@@ -307,29 +313,101 @@ class Student:
       try:
         conn = mysql.connector.connect(host = "localhost", username = "root", password = "7575", database ="face_recognizer")
         my_cursor = conn.cursor()
-        my_cursor.execute("insert into student values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", (
-                                                                                                            self.var_department.get(),
-                                                                                                            self.var_course.get(),
-                                                                                                            self.var_year.get(),
-                                                                                                            self.var_semester.get(),
-                                                                                                            self.var_student_name.get(),
-                                                                                                            self.var_enrollment_no.get(),
-                                                                                                            self.var_stu_course.get(),
-                                                                                                            self.var_gender.get(),
-                                                                                                            self.var_stu_email.get(),
-                                                                                                            self.var_stu_phone.get(),
-                                                                                                            self.var_address.get(),
-                                                                                                            self.var_teacher.get(),
-                                                                                                            self.var_radio.get()
-                                                                                                          )
+        my_cursor.execute("insert into student values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", 
+                          (
+                            self.var_department.get(),
+                            self.var_course.get(),
+                            self.var_year.get(),
+                            self.var_semester.get(),
+                            self.var_student_name.get(),
+                            self.var_enrollment_no.get(),
+                            self.var_stu_division.get(),
+                            self.var_gender.get(),
+                            self.var_stu_email.get(),
+                            self.var_stu_phone.get(),
+                            self.var_address.get(),
+                            self.var_teacher.get(),
+                            self.var_radio.get()
                           )
+                        )
         conn.commit()
+        self.fetch_data()
         conn.close()
         messagebox.showinfo("Success", "Student details has been added Successfully", parent = self.root)
       
       except Exception as es:
         messagebox.showerror("Error",f"Due to :{str(es)}", parent = self.root)
+  
+  # ================  Fetch Data ================
+  def fetch_data(self):
+    conn = mysql.connector.connect(host = "localhost", username = "root", password = "7575", database ="face_recognizer")
+    my_cursor = conn.cursor()
+    my_cursor.execute("select * from student")
+    data = my_cursor.fetchall()
+    if len(data) != 0:
+      self.student_table.delete(*self.student_table.get_children())
+      for i in data:
+        self.student_table.insert("",END,values=i)
+        conn.commit()
+    conn.close()
+  
+  # ================ Get Cursor ================
+  def get_cursor(self, event = ""):
+    cursor_focus = self.student_table.focus()
+    content = self.student_table.item(cursor_focus)
+    data = content["values"]
 
+    self.var_department.set(data[0]),
+    self.var_course.set(data[1]),
+    self.var_year.set(data[2]),
+    self.var_semester.set(data[3]),
+    self.var_student_name.set(data[4]),
+    self.var_enrollment_no.set(data[5]),
+    self.var_stu_division.set(data[6]),
+    self.var_gender.set(data[7]),
+    self.var_stu_email.set(data[8]),
+    self.var_stu_phone.set(data[9]),
+    self.var_address.set(data[10]),
+    self.var_teacher.set(data[11]),
+    self.var_radio.set(data[12])
+
+  # ================ GUpdate data ================
+  def update_data(self):
+    if self.var_department.get() == "Select the Department" or self.var_student_name.get() == "" or self.var_enrollment_no == "":
+      messagebox.showerror("Error",'All fields are required', parent = self.root)
+    else:
+      try:
+        update = messagebox.askyesno("Update", "Are you sure you want to update student details?", parent = self.root)
+        if update > 0:
+          conn = mysql.connector.connect(host = "localhost", username = "root", password = "7575", database ="face_recognizer")
+          my_cursor = conn.cursor()
+          my_cursor.execute("update student set Department=%s, Course=%s, Year=%s, Semester=%s, StudentName=%s, StudentDivision=%s, Gender=%s, StudentEMail=%s, StudentPhone=%s, Address=%s, Teacher=%s, PhotoSample=%s where EnrollmentNumber=%s", 
+                            (
+                              self.var_department.get(),
+                              self.var_course.get(),
+                              self.var_year.get(),
+                              self.var_semester.get(),
+                              self.var_student_name.get(),
+                              self.var_stu_division.get(),
+                              self.var_gender.get(),
+                              self.var_stu_email.get(),
+                              self.var_stu_phone.get(),
+                              self.var_address.get(),
+                              self.var_teacher.get(),
+                              self.var_radio.get(),
+                              self.var_enrollment_no.get()
+                            )
+                        )
+        else:
+          if not update:
+            return
+
+        messagebox.showinfo("Success", "Student Details Updated successfully", parent = self.root)
+        conn.commit()
+        self.fetch_data()
+        conn.close()
+      except Exception as es:
+        messagebox.showerror("Error",f"Due to :{str(es)}", parent = self.root)
 
 
 def main() -> None:
