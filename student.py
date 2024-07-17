@@ -4,6 +4,7 @@ from PIL import Image, ImageTk
 import mysql.connector
 
 
+
 class Student:
   def __init__(self, root) -> None:
     self.root = root
@@ -311,7 +312,7 @@ class Student:
       messagebox.showerror("Error",'All fields are required', parent = self.root)
     else:
       try:
-        conn = mysql.connector.connect(host = "localhost", username = "root", password = "7575", database ="face_recognizer")
+        conn = mysql.connector.connect(host = "localhost", username = "root", password = "12345@67890", database ="face_recognizer", port = 3304)
         my_cursor = conn.cursor()
         my_cursor.execute("insert into student values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", 
                           (
@@ -340,15 +341,15 @@ class Student:
   
   # ================  Fetch Data ================
   def fetch_data(self):
-    conn = mysql.connector.connect(host = "localhost", username = "root", password = "7575", database ="face_recognizer")
+    conn = mysql.connector.connect(host = "localhost", username = "root", password = "12345@67890", database ="face_recognizer", port = 3304)
     my_cursor = conn.cursor()
     my_cursor.execute("select * from student")
     data = my_cursor.fetchall()
-    if len(data) != 0:
-      self.student_table.delete(*self.student_table.get_children())
-      for i in data:
-        self.student_table.insert("",END,values=i)
-        conn.commit()
+    # if len(data) != -1:
+    self.student_table.delete(*self.student_table.get_children())
+    for i in data:
+      self.student_table.insert("",END,values=i)
+      conn.commit()
     conn.close()
   
   # ================ Get Cursor ================
@@ -371,7 +372,7 @@ class Student:
     self.var_teacher.set(data[11]),
     self.var_radio.set(data[12])
 
-  # ================ GUpdate data ================
+  # ================ Update data ================
   def update_data(self):
     if self.var_department.get() == "Select the Department" or self.var_student_name.get() == "" or self.var_enrollment_no == "":
       messagebox.showerror("Error",'All fields are required', parent = self.root)
@@ -379,7 +380,7 @@ class Student:
       try:
         update = messagebox.askyesno("Update", "Are you sure you want to update student details?", parent = self.root)
         if update > 0:
-          conn = mysql.connector.connect(host = "localhost", username = "root", password = "7575", database ="face_recognizer")
+          conn = mysql.connector.connect(host = "localhost", username = "root", password = "12345@67890", database ="face_recognizer", port = 3304)
           my_cursor = conn.cursor()
           my_cursor.execute("update student set Department=%s, Course=%s, Year=%s, Semester=%s, StudentName=%s, StudentDivision=%s, Gender=%s, StudentEMail=%s, StudentPhone=%s, Address=%s, Teacher=%s, PhotoSample=%s where EnrollmentNumber=%s", 
                             (
@@ -417,7 +418,7 @@ class Student:
       try:
         delete = messagebox.askyesno("Delete", "Are you sure you want to delete student details?", parent = self.root)
         if delete > 0:
-          conn = mysql.connector.connect(host = "localhost", username = "root", password = "7575", database ="face_recognizer")
+          conn = mysql.connector.connect(host = "localhost", username = "root", password = "12345@67890", database ="face_recognizer", port = 3304)
           my_cursor = conn.cursor()
           my_cursor.execute("delete from student where EnrollmentNumber=%s", (self.var_enrollment_no.get(),))
         
@@ -433,7 +434,7 @@ class Student:
       except EXCEPTION as es:
         messagebox.showerror("Error",f"Due to :{str(es)}", parent = self.root)
 
-  # ================= Delete Data =================
+  # ================= Reset Data =================
   def reset_data(self):
     self.var_department.set("Select the Department"),
     self.var_course.set("Select the Course"),
