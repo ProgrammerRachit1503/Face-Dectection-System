@@ -204,7 +204,7 @@ class Student:
     save_btn.grid(row=0,column=0)
 
     
-    update_btn=Button(btn_Frame, text="Update", font=("times new roman", 15, "bold"), bg="blue", fg="white", width=18)
+    update_btn=Button(btn_Frame, text="Update", command=self.update_data, font=("times new roman", 15, "bold"), bg="blue", fg="white", width=18)
     update_btn.grid(row=0,column=1)
     
     reset_btn=Button(btn_Frame, text="Reset", font=("times new roman", 15, "bold"), bg="blue", fg="white", width=18)
@@ -263,7 +263,7 @@ class Student:
     scroll_x = ttk.Scrollbar(Table_Frame, orient=HORIZONTAL)
     scroll_y = ttk.Scrollbar(Table_Frame, orient=VERTICAL)
 
-    self.student_table = ttk.Treeview(Table_Frame, column=("Department", "Course", "Year", "Semester", "Student Name", "Enrollment No.", "Student Course", "Gender", "Student E-Mail", "Student Phone No.", "Address", "Teacher Name", "Photo"),xscrollcommand=scroll_x.set,yscrollcommand=scroll_y.set)
+    self.student_table = ttk.Treeview(Table_Frame, column=("Department", "Course", "Year", "Semester", "Student Name", "Enrollment No.", "Student Division", "Gender", "Student E-Mail", "Student Phone No.", "Address", "Teacher Name", "Photo"),xscrollcommand=scroll_x.set,yscrollcommand=scroll_y.set)
 
     scroll_x.pack(side=BOTTOM,fill=X)
     scroll_x.config(command=self.student_table.xview)
@@ -276,7 +276,7 @@ class Student:
     self.student_table.heading("Semester", text="Semester")
     self.student_table.heading("Student Name", text="Student Name")
     self.student_table.heading("Enrollment No.", text="Enrollment No.")
-    self.student_table.heading("Student Course", text="Student Course")
+    self.student_table.heading("Student Division", text="Student Division")
     self.student_table.heading("Gender", text="Gender")
     self.student_table.heading("Student E-Mail", text="Student E-Mail")
     self.student_table.heading("Student Phone No.", text="Student Phone No.")
@@ -291,7 +291,7 @@ class Student:
     self.student_table.column("Semester", width=100)
     self.student_table.column("Student Name", width=100)
     self.student_table.column("Enrollment No.", width=100)
-    self.student_table.column("Student Course", width=100)
+    self.student_table.column("Student Division", width=100)
     self.student_table.column("Gender", width=100)
     self.student_table.column("Student E-Mail", width=100)
     self.student_table.column("Student Phone No.", width=100)
@@ -370,6 +370,44 @@ class Student:
     self.var_address.set(data[10]),
     self.var_teacher.set(data[11]),
     self.var_radio.set(data[12])
+
+  # ================ GUpdate data ================
+  def update_data(self):
+    if self.var_department.get() == "Select the Department" or self.var_student_name.get() == "" or self.var_enrollment_no == "":
+      messagebox.showerror("Error",'All fields are required', parent = self.root)
+    else:
+      try:
+        update = messagebox.askyesno("Update", "Are you sure you want to update student details?", parent = self.root)
+        if update > 0:
+          conn = mysql.connector.connect(host = "localhost", username = "root", password = "7575", database ="face_recognizer")
+          my_cursor = conn.cursor()
+          my_cursor.execute("update student set Department=%s, Course=%s, Year=%s, Semester=%s, StudentName=%s, StudentDivision=%s, Gender=%s, StudentEMail=%s, StudentPhone=%s, Address=%s, Teacher=%s, PhotoSample=%s where EnrollmentNumber=%s", 
+                            (
+                              self.var_department.get(),
+                              self.var_course.get(),
+                              self.var_year.get(),
+                              self.var_semester.get(),
+                              self.var_student_name.get(),
+                              self.var_stu_division.get(),
+                              self.var_gender.get(),
+                              self.var_stu_email.get(),
+                              self.var_stu_phone.get(),
+                              self.var_address.get(),
+                              self.var_teacher.get(),
+                              self.var_radio.get(),
+                              self.var_enrollment_no.get()
+                            )
+                        )
+        else:
+          if not update:
+            return
+
+        messagebox.showinfo("Success", "Student Details Updated successfully", parent = self.root)
+        conn.commit()
+        self.fetch_data()
+        conn.close()
+      except Exception as es:
+        messagebox.showerror("Error",f"Due to :{str(es)}", parent = self.root)
 
 
 def main() -> None:
