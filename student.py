@@ -346,7 +346,6 @@ class Student:
     my_cursor = conn.cursor()
     my_cursor.execute("select * from student")
     data = my_cursor.fetchall()
-    # if len(data) != -1:
     self.student_table.delete(*self.student_table.get_children())
     for i in data:
       self.student_table.insert("",END,values=i)
