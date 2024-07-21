@@ -312,7 +312,7 @@ class Student:
       messagebox.showerror("Error",'All fields are required', parent = self.root)
     else:
       try:
-        conn = mysql.connector.connect(host = "localhost", username = "root", password = "12345@67890", database ="face_recognizer", port = 3304)
+        conn = mysql.connector.connect(host = "localhost", username = "root", password = "7575", database ="face_recognizer", port = 3306)
         my_cursor = conn.cursor()
         my_cursor.execute("insert into student values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", 
                           (
@@ -341,7 +341,7 @@ class Student:
   
   # ================  Fetch Data ================
   def fetch_data(self):
-    conn = mysql.connector.connect(host = "localhost", username = "root", password = "12345@67890", database ="face_recognizer", port = 3304)
+    conn = mysql.connector.connect(host = "localhost", username = "root", password = "7575", database ="face_recognizer", port = 3306)
     my_cursor = conn.cursor()
     my_cursor.execute("select * from student")
     data = my_cursor.fetchall()
@@ -379,7 +379,7 @@ class Student:
       try:
         update = messagebox.askyesno("Update", "Are you sure you want to update student details?", parent = self.root)
         if update > 0:
-          conn = mysql.connector.connect(host = "localhost", username = "root", password = "12345@67890", database ="face_recognizer", port = 3304)
+          conn = mysql.connector.connect(host = "localhost", username = "root", password = "7575", database ="face_recognizer", port = 3306)
           my_cursor = conn.cursor()
           my_cursor.execute("update student set Department=%s, Course=%s, Year=%s, Semester=%s, StudentName=%s, StudentDivision=%s, Gender=%s, StudentEMail=%s, StudentPhone=%s, Address=%s, Teacher=%s, PhotoSample=%s where EnrollmentNumber=%s", 
                             (
@@ -417,7 +417,7 @@ class Student:
       try:
         delete = messagebox.askyesno("Delete", "Are you sure you want to delete student details?", parent = self.root)
         if delete > 0:
-          conn = mysql.connector.connect(host = "localhost", username = "root", password = "12345@67890", database ="face_recognizer", port = 3304)
+          conn = mysql.connector.connect(host = "localhost", username = "root", password = "7575", database ="face_recognizer", port = 3306)
           my_cursor = conn.cursor()
           my_cursor.execute("delete from student where EnrollmentNumber=%s", (self.var_enrollment_no.get(),))
         
@@ -455,7 +455,7 @@ class Student:
       messagebox.showerror("Error",'All fields are required', parent = self.root)
     else:
       try:
-        conn = mysql.connector.connect(host = "localhost", username = "root", password = "12345@67890", database ="face_recognizer", port = 3304)
+        conn = mysql.connector.connect(host = "localhost", username = "root", password = "7575", database ="face_recognizer", port = 3306)
         my_cursor = conn.cursor()
         my_cursor.execute("select * from student")
         my_result = my_cursor.fetchall()
@@ -503,7 +503,8 @@ class Student:
             img_id += 1
             face = cv2.resize(face_cropped(my_frame), (450,450))
             face = cv2.cvtColor(face,cv2.COLOR_BGR2GRAY)
-            file_name_path = f"data/user_{self.var_enrollment_no.get()}_{img_id}.jpg"
+            file_name_path = f"data/user_{id}_{self.var_enrollment_no.get()}_{img_id}.jpg"
+            
             cv2.imwrite(file_name_path, face)
             cv2.putText(face, f"{img_id}", (50,50), cv2.FONT_HERSHEY_COMPLEX, 2, (0,255,255,0),2)
             cv2.imshow("Cropped Face", face)
