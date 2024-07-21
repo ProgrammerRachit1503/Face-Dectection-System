@@ -2,6 +2,9 @@ from tkinter import *
 from tkinter import ttk
 from PIL import Image, ImageTk
 from student import Student
+import os
+from train import Train
+
 
 
 class Face_Recognition_System:
@@ -94,10 +97,10 @@ class Face_Recognition_System:
     img8 = img8.resize((220, 220), Image.LANCZOS)
     self.photoimg8 = ImageTk.PhotoImage(img8)
 
-    b5 = Button(bg_img, image=self.photoimg8, cursor="hand2")
+    b5 = Button(bg_img, image=self.photoimg8, cursor="hand2", command=self.train_data)
     b5.place(x=200, y=450, width=220, height=220)
 
-    b5_5 = Button(bg_img, text="Train Face", cursor="hand2", font=("times new roman", 15, "bold"), bg="darkblue", fg="white")
+    b5_5 = Button(bg_img, text="Train Face", cursor="hand2", command=self.train_data, font=("times new roman", 15, "bold"), bg="darkblue", fg="white")
     b5_5.place(x=200, y=650, width=220, height=40)
 
     # Photos Button
@@ -105,10 +108,10 @@ class Face_Recognition_System:
     img9 = img9.resize((220, 220), Image.LANCZOS)
     self.photoimg9 = ImageTk.PhotoImage(img9)
 
-    b6 = Button(bg_img, image=self.photoimg9, cursor="hand2")
+    b6 = Button(bg_img, image=self.photoimg9, cursor="hand2",command=self.open_img)
     b6.place(x=620, y=450, width=220, height=220)
 
-    b6_6 = Button(bg_img, text="Photos", cursor="hand2", font=("times new roman", 15, "bold"), bg="darkblue", fg="white")
+    b6_6 = Button(bg_img, text="Photos", cursor="hand2",command=self.open_img, font=("times new roman", 15, "bold"), bg="darkblue", fg="white")
     b6_6.place(x=620, y=650, width=220, height=40)
 
     # Developer Button
@@ -133,10 +136,20 @@ class Face_Recognition_System:
     b8_6 = Button(bg_img, text="Exit", cursor="hand2", font=("times new roman", 15, "bold"), bg="darkblue", fg="white")
     b8_6.place(x=1420, y=650, width=220, height=40)
 
+
+  def open_img(self):
+    os.startfile("data")
+
+
   # ================ Function Buttons ================
   def student_details(self):
     self.new_window = Toplevel(self.root)
     self.app = Student(self.new_window)
+
+
+  def train_data(self):
+    self.new_window = Toplevel(self.root)
+    self.app = Train(self.new_window)
 
 
 def main() -> None:
