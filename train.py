@@ -5,10 +5,11 @@ import mysql.connector
 import cv2
 import os
 import numpy as np
+import face_recognition
+import pickle
 
 
 class Train:
-  
   def __init__(self, root) -> None:
     self.root = root
     self.root.geometry("1920x1080+0+0")
@@ -39,48 +40,79 @@ class Train:
     f_lbl = Label(self.root, image = self.photoimg_bottom)
     f_lbl.place(x=0, y=400, width=1920, height=730)
   
+  # def train_classifier(self):
+  #   data_dir = "data"  # Assuming the data directory exists
+
+  #   paths = [os.path.join(data_dir, file) for file in os.listdir(data_dir) if file.endswith(".jpg") or file.endswith(".png")]
+
+  #   faces = []
+  #   ids = []
+
+  #   for image_path in paths:
+  #     try:
+  #       img = Image.open(image_path).convert('L')
+  #       imageNp = np.array(img, 'uint8')
+
+  #       id_str = os.path.splitext(os.path.basename(image_path))[0].split("_")[1]
+  #       id = int(id_str)
+
+  #       faces.append(imageNp)
+  #       ids.append(id)
+
+  #       cv2.imshow("Training", imageNp)
+  #       cv2.waitKey(1) 
+      
+  #     except FileNotFoundError as e:
+  #       print(f"Error: File not found: {image_path}")
+
+  #   # Ensure data has been loaded
+  #   if not faces:
+  #     print("Error: No images found in the data directory.")
+  #     return
+
+  #   # Convert lists to NumPy arrays for training
+  #   faces_np = np.array(faces)
+  #   ids_np = np.array(ids)
+
+  #   # Train the classifier
+  #   clf = cv2.face.LBPHFaceRecognizer_create()
+  #   clf.train(faces_np, ids_np)
+
+  #   # Save the classifier
+  #   clf.write("classifier.xml")
+  #   cv2.destroyAllWindows()
+  #   messagebox.showinfo("Result", "Training dataset completed!")
+
+
+
   def train_classifier(self):
     data_dir = "data"  # Assuming the data directory exists
 
-    paths = [os.path.join(data_dir, file) for file in os.listdir(data_dir) if file.endswith(".jpg") or file.endswith(".png")]
+    known_face_encodings = []
+    known_face_names = []
 
-    faces = []
-    ids = []
+    for filename in os.listdir(data_dir):
+        if filename.endswith(".jpg") or filename.endswith(".png"):
+            # Assuming filename format: '<ID>_name.jpg'
+            id_str = os.path.splitext(os.path.basename(filename))[0].split("_")[1]
+            id = int(id_str)
+            name = os.path.splitext(os.path.basename(filename))[0].split("_")[0]
 
-    for image_path in paths:
-      try:
-        img = Image.open(image_path).convert('L')
-        imageNp = np.array(img, 'uint8')
+            img_path = os.path.join(data_dir, filename)
+            img = face_recognition.load_image_file(img_path)
+            face_encoding = face_recognition.face_encodings(img)[0]  # Assume one face per image
 
-        id_str = os.path.splitext(os.path.basename(image_path))[0].split("_")[1]
-        id = int(id_str)
+            known_face_encodings.append(face_encoding)
+            known_face_names.append(name)
+            cv2.imshow("Training", face_encoding)
+            cv2.waitKey(1)
 
-        faces.append(imageNp)
-        ids.append(id)
+    # Save the known encodings and names (modify as needed)
+    with open("known_encodings.pickle", "wb") as f:
+        pickle.dump((known_face_encodings, known_face_names), f)
 
-        cv2.imshow("Training", imageNp)
-        cv2.waitKey(1) 
-      
-      except FileNotFoundError as e:
-        print(f"Error: File not found: {image_path}")
+    messagebox.showinfo("Result", "Training data processed and saved!")
 
-    # Ensure data has been loaded
-    if not faces:
-      print("Error: No images found in the data directory.")
-      return
-
-    # Convert lists to NumPy arrays for training
-    faces_np = np.array(faces)
-    ids_np = np.array(ids)
-
-    # Train the classifier
-    clf = cv2.face.LBPHFaceRecognizer_create()
-    clf.train(faces_np, ids_np)
-
-    # Save the classifier
-    clf.write("classifier.xml")
-    cv2.destroyAllWindows()
-    messagebox.showinfo("Result", "Training dataset completed!")
 
 
 def main() -> None:
