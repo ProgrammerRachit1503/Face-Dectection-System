@@ -6,7 +6,6 @@ import os
 from train import Train
 
 
-
 class Face_Recognition_System:
   def __init__(self, root) -> None:
     self.root = root
@@ -140,12 +139,10 @@ class Face_Recognition_System:
   def open_img(self):
     os.startfile("data")
 
-
   # ================ Function Buttons ================
   def student_details(self):
     self.new_window = Toplevel(self.root)
     self.app = Student(self.new_window)
-
 
   def train_data(self):
     self.new_window = Toplevel(self.root)
