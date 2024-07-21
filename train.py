@@ -92,26 +92,30 @@ class Train:
     known_face_names = []
 
     for filename in os.listdir(data_dir):
-        if filename.endswith(".jpg") or filename.endswith(".png"):
-            # Assuming filename format: '<ID>_name.jpg'
-            id_str = os.path.splitext(os.path.basename(filename))[0].split("_")[1]
-            id = int(id_str)
-            name = os.path.splitext(os.path.basename(filename))[0].split("_")[0]
+      if filename.endswith(".jpg") or filename.endswith(".png"):
+        # Improved filename parsing (assuming format: user_<id>_<Enrollment_No>_<img_id>)
+        try:
+          name, _, _, _ = filename.split("_")
+          img_path = os.path.join(data_dir, filename)
+          img = face_recognition.load_image_file(img_path)
+          face_encoding = face_recognition.face_encodings(img)[0]  # Assume one face per image
+          known_face_encodings.append(face_encoding)
+          known_face_names.append(name)
+          cv2.imshow("Training", face_encoding)  # Display for training visualization (optional)
+          cv2.waitKey(1)  # Wait briefly (non-blocking)
+        
+        except ValueError:
+          print(f"Error parsing filename: {filename}. Skipping.")
 
-            img_path = os.path.join(data_dir, filename)
-            img = face_recognition.load_image_file(img_path)
-            face_encoding = face_recognition.face_encodings(img)[0]  # Assume one face per image
+    if not known_face_encodings:
+        print("Error: No valid image files found in the data directory.")
+        return
 
-            known_face_encodings.append(face_encoding)
-            known_face_names.append(name)
-            cv2.imshow("Training", face_encoding)
-            cv2.waitKey(1)
-
-    # Save the known encodings and names (modify as needed)
     with open("known_encodings.pickle", "wb") as f:
         pickle.dump((known_face_encodings, known_face_names), f)
 
     messagebox.showinfo("Result", "Training data processed and saved!")
+    cv2.destroyAllWindows()  # Close any open OpenCV windows
 
 
 
