@@ -453,35 +453,13 @@ class Student:
   def generate_dataset(self):
     if self.var_department.get() == "Select the Department" or self.var_student_name.get() == "" or self.var_enrollment_no == "":
       messagebox.showerror("Error",'All fields are required', parent = self.root)
+    
     else:
       try:
         conn = mysql.connector.connect(host = "localhost", username = "root", password = "12345@67890", database ="face_recognizer", port = 3304)
         my_cursor = conn.cursor()
         my_cursor.execute("select * from student")
-        my_result = my_cursor.fetchall()
-        id = 0
-        
-        for _ in my_result:
-          id += 1
-        
-        my_cursor.execute("update student set Department=%s, Course=%s, Year=%s, Semester=%s, StudentName=%s, StudentDivision=%s, Gender=%s, StudentEMail=%s, StudentPhone=%s, Address=%s, Teacher=%s, PhotoSample=%s where EnrollmentNumber=%s", 
-                            (
-                              self.var_department.get(),
-                              self.var_course.get(),
-                              self.var_year.get(),
-                              self.var_semester.get(),
-                              self.var_student_name.get(),
-                              self.var_stu_division.get(),
-                              self.var_gender.get(),
-                              self.var_stu_email.get(),
-                              self.var_stu_phone.get(),
-                              self.var_address.get(),
-                              self.var_teacher.get(),
-                              self.var_radio.get(),
-                              self.var_enrollment_no.get() == id+1
-                            )
-                        )
-        conn.commit()
+
         self.fetch_data()
         conn.close()
 
@@ -489,27 +467,20 @@ class Student:
         face_classifier=cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
 
         def face_cropped(img):
-          gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-          faces = face_classifier.detectMultiScale(gray,1.3,5) # scaling factor=1.3  minimum neighbor=5
+          faces = face_classifier.detectMultiScale(img,1.3,5)
           for (x,y,w,h) in faces:
-            face_cropped = img[y:y+h, x:x+w]
+            face_cropped = img[y:y+h+25, x:x+w+50]
             return face_cropped
           
         cap = cv2.VideoCapture(0)
-        img_id = 0
-        while True:
-          ret,my_frame = cap.read()
-          if face_cropped(my_frame) is not None:
-            img_id += 1
-            face = cv2.resize(face_cropped(my_frame), (450,450))
-            face = cv2.cvtColor(face,cv2.COLOR_BGR2GRAY)
-            file_name_path = f"data/user_{id}_{self.var_enrollment_no.get()}_{img_id}.jpg"
-            
-            cv2.imwrite(file_name_path, face)
-            cv2.putText(face, f"{img_id}", (50,50), cv2.FONT_HERSHEY_COMPLEX, 2, (0,255,255,0),2)
-            cv2.imshow("Cropped Face", face)
-          if cv2.waitKey(1)==13 or int(img_id) == 100:
-            break
+        ret,my_frame = cap.read()
+        if face_cropped(my_frame) is not None:
+          face = cv2.resize(face_cropped(my_frame), (500,500))
+          file_name_path = f"data/student_{self.var_enrollment_no.get()}_{self.var_student_name.get()}_.jpg"
+          
+          cv2.imwrite(file_name_path, face)
+          cv2.imshow("Cropped Face", face)
+          cv2.waitKey(1000)
         
         cap.release()
         cv2.destroyAllWindows()
