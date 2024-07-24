@@ -1,9 +1,11 @@
 from tkinter import *
-from tkinter import ttk
+from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
 from student import Student
+import cv2
 import os
-from train import Train
+import face_recognition
+import pickle
 
 
 class Face_Recognition_System:
@@ -96,10 +98,10 @@ class Face_Recognition_System:
     img8 = img8.resize((220, 220), Image.LANCZOS)
     self.photoimg8 = ImageTk.PhotoImage(img8)
 
-    b5 = Button(bg_img, image=self.photoimg8, cursor="hand2", command=self.train_data)
+    b5 = Button(bg_img, image=self.photoimg8, cursor="hand2", command=self.train_classifier)
     b5.place(x=200, y=450, width=220, height=220)
 
-    b5_5 = Button(bg_img, text="Train Face", cursor="hand2", command=self.train_data, font=("times new roman", 15, "bold"), bg="darkblue", fg="white")
+    b5_5 = Button(bg_img, text="Train Face", cursor="hand2", command=self.train_classifier, font=("times new roman", 15, "bold"), bg="darkblue", fg="white")
     b5_5.place(x=200, y=650, width=220, height=40)
 
     # Photos Button
@@ -143,10 +145,40 @@ class Face_Recognition_System:
   def student_details(self):
     self.new_window = Toplevel(self.root)
     self.app = Student(self.new_window)
+  
+  def train_classifier(self):
+    
+    def read_img(path):
+      img = cv2.imread(path)
+      (h, w) = img.shape[:2]
+      width = 500
+      ratio = width / float(w)
+      height = int(h * ratio)
+      return cv2.resize(img, (width, height))
 
-  def train_data(self):
-    self.new_window = Toplevel(self.root)
-    self.app = Train(self.new_window)
+    data_dir = "data"
+
+    known_face_encodings = []
+    known_face_names = []
+
+    for student_img in os.listdir(data_dir):
+      img = read_img(f"{data_dir}/{student_img}")
+      
+      img_encoding = face_recognition.face_encodings(img)[0]
+      
+      known_face_encodings.append(img_encoding)
+      # converts filename format student_<Enrollment Number>_<Student Name>_.jpg ==> <Enrollment Number>_<Student Name> 
+      known_face_names.append("_".join(student_img.split("_")[1:3]))
+
+    if not known_face_encodings:
+      print("Error: No valid image files found in the data directory.")
+      messagebox.showerror("Error","No valid image files found in the data directory.")
+      return
+
+    with open("known_faces.pkl", "wb") as f:
+      pickle.dump((known_face_encodings, known_face_names), f)
+    
+    messagebox.showinfo("Success","Training data completed.")
 
 
 def main() -> None:

@@ -1,6 +1,7 @@
-
 /__pycache__
 /data
 .vscode/settings.json
 /.vscode
 testing.py
+/.pkl
+known_faces.pkl
