@@ -97,7 +97,6 @@ class Student:
     course_combo.current(0)
     course_combo.grid(row = 0, column = 3, padx=5, pady=15, sticky=W)
 
-
     # Year
     year_lbl = Label(current_course_Frame, text = "Year", font=("times new roman", 15, "bold"), bg="white")
     year_lbl.grid(row = 1, column = 0, padx=10, pady=15, sticky=W)
@@ -106,7 +105,6 @@ class Student:
     year_combo["values"]=("Select the Year","2020","2021","2022","2023","2024")
     year_combo.current(0)
     year_combo.grid(row = 1, column = 1, padx=5, pady=15, sticky=W)
-
 
     # semester
     sem_lbl = Label(current_course_Frame, text = "Semester", font=("times new roman", 15, "bold"), bg="white")
@@ -117,19 +115,11 @@ class Student:
     sem_combo.current(0)
     sem_combo.grid(row = 1, column = 3, padx=5, pady=15, sticky=W)
 
-
     # Class Student Information
     class_Student_Frame = LabelFrame(left_Frame, bd=2, bg = "White", relief="ridge", text="Class Student Information", font=("times new roman", 16, "bold") )
     class_Student_Frame.place(x=10, y=320, width=920, height=400)
 
-    #Student ID Label
-    # Student_ID_lbl = Label(class_Student_Frame, text = "Student ID:", font=("times new roman", 15, "bold"), bg="white")
-    # Student_ID_lbl.grid(row = 0, column = 0, padx=10, pady=15, sticky=W)
-
-    # student_ID_entry = ttk.Entry(class_Student_Frame, font=("times new roman", 15, "bold"))
-    # student_ID_entry.grid(row = 0, column=1, padx=10, pady=15, sticky=W)
-
-    # student name
+    # Student Name
     Student_name_lbl = Label(class_Student_Frame, text = "Student Name:", font=("times new roman", 15, "bold"), bg="white")
     Student_name_lbl.grid(row = 0, column = 0, padx=10, pady=15, sticky=W)
 
@@ -204,13 +194,12 @@ class Student:
     save_btn=Button(btn_Frame, text="Save", command=self.add_data, font=("times new roman", 15, "bold"), bg="blue", fg="white", width=18)
     save_btn.grid(row=0,column=0)
 
-    
     update_btn=Button(btn_Frame, text="Update", command=self.update_data, font=("times new roman", 15, "bold"), bg="blue", fg="white", width=18)
     update_btn.grid(row=0,column=1)
-    
+
     reset_btn=Button(btn_Frame, text="Reset", command=self.reset_data, font=("times new roman", 15, "bold"), bg="blue", fg="white", width=18)
     reset_btn.grid(row=0,column=2)
-    
+
     delete_btn=Button(btn_Frame, text="Delete", command=self.delete_data, font=("times new roman", 15, "bold"), bg="blue", fg="white", width=18)
     delete_btn.grid(row=0,column=3)
 
@@ -223,8 +212,7 @@ class Student:
 
     update_sample_btn=Button(btn_Frame_2, text="Update Sample", font=("times new roman", 15, "bold"), bg="blue", fg="white", width=37)
     update_sample_btn.grid(row=1,column=3)
-    
-             
+
     # Right Frame
     right_Frame = LabelFrame(main_frame, bd=2, bg = "White", relief="ridge", text="Student Details", font=("times new roman", 16, "bold") )
     right_Frame.place(x=960, y=10, width=940, height=760)
@@ -310,32 +298,35 @@ class Student:
   def add_data(self):
     if self.var_department.get() == "Select the Department" or self.var_student_name.get() == "" or self.var_enrollment_no == "":
       messagebox.showerror("Error",'All fields are required', parent = self.root)
+
     else:
       try:
         conn = mysql.connector.connect(host = "localhost", username = "root", password = "7575", database ="face_recognizer", port = 3306)
         my_cursor = conn.cursor()
-        my_cursor.execute("insert into student values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", 
-                          (
-                            self.var_department.get(),
-                            self.var_course.get(),
-                            self.var_year.get(),
-                            self.var_semester.get(),
-                            self.var_student_name.get(),
-                            self.var_enrollment_no.get(),
-                            self.var_stu_division.get(),
-                            self.var_gender.get(),
-                            self.var_stu_email.get(),
-                            self.var_stu_phone.get(),
-                            self.var_address.get(),
-                            self.var_teacher.get(),
-                            self.var_radio.get()
-                          )
-                        )
+
+        my_tuple = (
+          self.var_department.get(),
+          self.var_course.get(),
+          self.var_year.get(),
+          self.var_semester.get(),
+          self.var_student_name.get(),
+          self.var_enrollment_no.get(),
+          self.var_stu_division.get(),
+          self.var_gender.get(),
+          self.var_stu_email.get(),
+          self.var_stu_phone.get(),
+          self.var_address.get(),
+          self.var_teacher.get(),
+          self.var_radio.get()
+        )
+        my_cursor.execute("insert into student values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", my_tuple)
+
         conn.commit()
         self.fetch_data()
         conn.close()
+
         messagebox.showinfo("Success", "Student details has been added Successfully", parent = self.root)
-      
+
       except Exception as es:
         messagebox.showerror("Error",f"Due to :{str(es)}", parent = self.root)
   
@@ -344,11 +335,14 @@ class Student:
     conn = mysql.connector.connect(host = "localhost", username = "root", password = "7575", database ="face_recognizer", port = 3306)
     my_cursor = conn.cursor()
     my_cursor.execute("select * from student")
+
     data = my_cursor.fetchall()
     self.student_table.delete(*self.student_table.get_children())
+
     for i in data:
       self.student_table.insert("",END,values=i)
       conn.commit()
+
     conn.close()
   
   # ================ Get Cursor ================
@@ -375,29 +369,32 @@ class Student:
   def update_data(self):
     if self.var_department.get() == "Select the Department" or self.var_student_name.get() == "" or self.var_enrollment_no == "":
       messagebox.showerror("Error",'All fields are required', parent = self.root)
+    
     else:
       try:
         update = messagebox.askyesno("Update", "Are you sure you want to update student details?", parent = self.root)
+        
         if update > 0:
           conn = mysql.connector.connect(host = "localhost", username = "root", password = "7575", database ="face_recognizer", port = 3306)
+          
+          my_tuple = (
+            self.var_department.get(),
+            self.var_course.get(),
+            self.var_year.get(),
+            self.var_semester.get(),
+            self.var_student_name.get(),
+            self.var_stu_division.get(),
+            self.var_gender.get(),
+            self.var_stu_email.get(),
+            self.var_stu_phone.get(),
+            self.var_address.get(),
+            self.var_teacher.get(),
+            self.var_radio.get(),
+            self.var_enrollment_no.get()
+          )
+          
           my_cursor = conn.cursor()
-          my_cursor.execute("update student set Department=%s, Course=%s, Year=%s, Semester=%s, StudentName=%s, StudentDivision=%s, Gender=%s, StudentEMail=%s, StudentPhone=%s, Address=%s, Teacher=%s, PhotoSample=%s where EnrollmentNumber=%s", 
-                            (
-                              self.var_department.get(),
-                              self.var_course.get(),
-                              self.var_year.get(),
-                              self.var_semester.get(),
-                              self.var_student_name.get(),
-                              self.var_stu_division.get(),
-                              self.var_gender.get(),
-                              self.var_stu_email.get(),
-                              self.var_stu_phone.get(),
-                              self.var_address.get(),
-                              self.var_teacher.get(),
-                              self.var_radio.get(),
-                              self.var_enrollment_no.get()
-                            )
-                        )
+          my_cursor.execute("update student set Department=%s, Course=%s, Year=%s, Semester=%s, StudentName=%s, StudentDivision=%s, Gender=%s, StudentEMail=%s, StudentPhone=%s, Address=%s, Teacher=%s, PhotoSample=%s where EnrollmentNumber=%s", my_tuple)
         
         elif not update:
           return
@@ -413,23 +410,25 @@ class Student:
   def delete_data(self):
     if self.var_enrollment_no.get() == "":
       messagebox.showerror("Error","Enrollment number is required", parent = self.root)
+
     else:
       try:
         delete = messagebox.askyesno("Delete", "Are you sure you want to delete student details?", parent = self.root)
+
         if delete > 0:
           conn = mysql.connector.connect(host = "localhost", username = "root", password = "7575", database ="face_recognizer", port = 3306)
           my_cursor = conn.cursor()
           my_cursor.execute("delete from student where EnrollmentNumber=%s", (self.var_enrollment_no.get(),))
-        
+
         elif not delete:
           return
-        
+
         messagebox.showinfo("Delete", "Student Details deleted successfully", parent = self.root)
         conn.commit()
         self.fetch_data()
         self.reset_data()
         conn.close()
-      
+
       except EXCEPTION as es:
         messagebox.showerror("Error",f"Due to :{str(es)}", parent = self.root)
 
@@ -453,7 +452,7 @@ class Student:
   def generate_dataset(self):
     if self.var_department.get() == "Select the Department" or self.var_student_name.get() == "" or self.var_enrollment_no == "":
       messagebox.showerror("Error",'All fields are required', parent = self.root)
-    
+
     else:
       try:
         conn = mysql.connector.connect(host = "localhost", username = "root", password = "7575", database ="face_recognizer", port = 3306)
@@ -471,17 +470,18 @@ class Student:
           for (x,y,w,h) in faces:
             face_cropped = img[y:y+h+25, x:x+w+50]
             return face_cropped
-          
+
         cap = cv2.VideoCapture(0)
         ret,my_frame = cap.read()
+
         if face_cropped(my_frame) is not None:
           face = cv2.resize(face_cropped(my_frame), (500,500))
           file_name_path = f"data/student_{self.var_enrollment_no.get()}_{self.var_student_name.get()}_.jpg"
-          
+
           cv2.imwrite(file_name_path, face)
           cv2.imshow("Cropped Face", face)
           cv2.waitKey(1000)
-        
+
         cap.release()
         cv2.destroyAllWindows()
         messagebox.showinfo("Result","Generating data sets completed !!!")
