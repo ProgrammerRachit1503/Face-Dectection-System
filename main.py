@@ -96,10 +96,10 @@ class Face_Recognition_System:
     img8 = img8.resize((220, 220), Image.LANCZOS)
     self.photoimg8 = ImageTk.PhotoImage(img8)
 
-    b5 = Button(bg_img, image=self.photoimg8, cursor="hand2", command=self.train_data)
+    b5 = Button(bg_img, image=self.photoimg8, cursor="hand2", command=Train.train_classifier)
     b5.place(x=200, y=450, width=220, height=220)
 
-    b5_5 = Button(bg_img, text="Train Face", cursor="hand2", command=self.train_data, font=("times new roman", 15, "bold"), bg="darkblue", fg="white")
+    b5_5 = Button(bg_img, text="Train Face", cursor="hand2", command=Train.train_classifier, font=("times new roman", 15, "bold"), bg="darkblue", fg="white")
     b5_5.place(x=200, y=650, width=220, height=40)
 
     # Photos Button
