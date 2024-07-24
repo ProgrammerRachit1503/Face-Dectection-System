@@ -23,8 +23,8 @@ class Face_Recognition_System:
     f_lbl.place(x=0, y=0, width=640, height=200)
 
     # Second Image
-    img1 = Image.open(r"Images/attendance.jpeg")
-    img1 = img1.resize((640, 200), Image.LANCZOS)
+    img1 = Image.open(r"images/Gd Goenka Logo.jpg")
+    img1 = img1.resize((630, 200), Image.LANCZOS)
     self.photoimg1 = ImageTk.PhotoImage(img1)
 
     f_lbl = Label(self.root, image = self.photoimg1)
