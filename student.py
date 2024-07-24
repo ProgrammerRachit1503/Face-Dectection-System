@@ -466,7 +466,7 @@ class Student:
         # ============ Load Predifined data on face frontal from openCV ==========
         face_classifier=cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
 
-        def face_cropped(img):
+        def face_cropped(img): 
           faces = face_classifier.detectMultiScale(img,1.3,5)
           for (x,y,w,h) in faces:
             face_cropped = img[y:y+h+25, x:x+w+50]
