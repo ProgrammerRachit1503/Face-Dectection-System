@@ -6,7 +6,6 @@ import cv2
 import os
 import face_recognition
 import pickle
-from faceRecognition import Face_Recognition
 
 
 class Face_Recognition_System:
@@ -66,10 +65,10 @@ class Face_Recognition_System:
     img5 = img5.resize((220, 220), Image.LANCZOS)
     self.photoimg5 = ImageTk.PhotoImage(img5)
 
-    b2 = Button(bg_img, image=self.photoimg5, cursor="hand2", command=self.face_data)
+    b2 = Button(bg_img, image=self.photoimg5, cursor="hand2")
     b2.place(x=620, y=100, width=220, height=220)
 
-    b2_2 = Button(bg_img, text="Face Detector", cursor="hand2", command=self.face_data, font=("times new roman", 15, "bold"), bg="darkblue", fg="white")
+    b2_2 = Button(bg_img, text="Face Detector", cursor="hand2", font=("times new roman", 15, "bold"), bg="darkblue", fg="white")
     b2_2.place(x=620, y=300, width=220, height=40)
 
     # Attendance Button
@@ -146,12 +145,6 @@ class Face_Recognition_System:
   def student_details(self):
     self.new_window = Toplevel(self.root)
     self.app = Student(self.new_window)
-
-  def face_data(self):
-    self.new_window = Toplevel(self.root)
-    self.app = Face_Recognition(self.new_window)
-
-
 
   # ========================= Train data ==================================
   def train_classifier(self):
