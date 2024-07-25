@@ -207,11 +207,8 @@ class Student:
     btn_Frame_2=Frame(class_Student_Frame,bd=2, relief=RIDGE,bg="white")
     btn_Frame_2.place(x=7, y=310, width=900,height=40)
 
-    take_sample_btn=Button(btn_Frame_2, command=self.generate_dataset, text="Take Sample", font=("times new roman", 15, "bold"), bg="blue", fg="white", width=37)
+    take_sample_btn=Button(btn_Frame_2, command=self.generate_dataset, text="Take Sample", font=("times new roman", 15, "bold"), bg="blue", fg="white", width=74)
     take_sample_btn.grid(row=1,column=0)
-
-    update_sample_btn=Button(btn_Frame_2, text="Update Sample", font=("times new roman", 15, "bold"), bg="blue", fg="white", width=37)
-    update_sample_btn.grid(row=1,column=3)
 
     # Right Frame
     right_Frame = LabelFrame(main_frame, bd=2, bg = "White", relief="ridge", text="Student Details", font=("times new roman", 16, "bold") )
