@@ -469,20 +469,25 @@ class Student:
             return face_cropped
 
         cap = cv2.VideoCapture(0)
-        ret,my_frame = cap.read()
+        _, my_frame = cap.read()
+        
+        Face_value = face_cropped(my_frame)
 
-        if face_cropped(my_frame) is not None:
-          face = cv2.resize(face_cropped(my_frame), (500,500))
+        if Face_value is not None:
+          face = cv2.resize(Face_value, (1920,1080))
           file_name_path = f"data/student_{self.var_enrollment_no.get()}_{self.var_student_name.get()}_.jpg"
 
           cv2.imwrite(file_name_path, face)
           cv2.imshow("Cropped Face", face)
           cv2.waitKey(1000)
 
-        cap.release()
-        cv2.destroyAllWindows()
-        messagebox.showinfo("Result","Generating data sets completed !!!")
-        self.reset_data()
+          cap.release()
+          cv2.destroyAllWindows()
+          messagebox.showinfo("Result","Generating data sets completed !!!")
+          self.reset_data()
+        
+        else:
+          messagebox.showerror("Error", "No face detected")
 
       except EXCEPTION as es:
         messagebox.showerror("Error",f"Due to :{str(es)}", parent = self.root)  
