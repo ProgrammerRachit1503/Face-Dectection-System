@@ -7,6 +7,7 @@ import cv2
 import os
 import face_recognition
 import pickle
+from developer import Developer
 
 
 class Face_Recognition_System:
