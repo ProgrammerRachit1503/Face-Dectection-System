@@ -3,6 +3,7 @@ from tkinter import messagebox
 from PIL import Image, ImageTk
 from student import Student
 from attendance import Attendance
+from developer import Developer
 import cv2
 import os
 import face_recognition
@@ -101,10 +102,10 @@ class Face_Recognition_System:
     img10 = img10.resize((220, 220), Image.LANCZOS)
     self.photoimg10 = ImageTk.PhotoImage(img10)
 
-    b7 = Button(bg_img, image=self.photoimg10, cursor="hand2")
+    b7 = Button(bg_img, image=self.photoimg10, cursor="hand2", command=self.dev_btn)
     b7.place(x=1420, y=100, width=220, height=220)
 
-    b7_6 = Button(bg_img, text="Developer", cursor="hand2", font=fonts, bg="darkblue", fg="white")
+    b7_6 = Button(bg_img, text="Developer", cursor="hand2", font=fonts, bg="darkblue", fg="white", command=self.dev_btn)
     b7_6.place(x=1420, y=300, width=220, height=40)
 
     # Exit Button
@@ -112,10 +113,10 @@ class Face_Recognition_System:
     img11 = img11.resize((220, 220), Image.LANCZOS)
     self.photoimg11 = ImageTk.PhotoImage(img11)
 
-    b8 = Button(bg_img, image=self.photoimg11, cursor="hand2")
+    b8 = Button(bg_img, image=self.photoimg11, cursor="hand2", command=root.destroy)
     b8.place(x=1420, y=450, width=220, height=220)
 
-    b8_6 = Button(bg_img, text="Exit", cursor="hand2", font=fonts, bg="darkblue", fg="white")
+    b8_6 = Button(bg_img, text="Exit", cursor="hand2", font=fonts, bg="darkblue", fg="white", command=root.destroy)
     b8_6.place(x=1420, y=650, width=220, height=40)
 
 # ========================= Function Buttons =========================
@@ -132,6 +133,11 @@ class Face_Recognition_System:
   def attendance_btn(self):
     self.new_window = Toplevel(self.root)
     self.app = Attendance(self.new_window)
+  
+  # ========================= Developer Button =========================
+  def dev_btn(self):
+    self.new_window = Toplevel(self.root)
+    self.app = Developer(self.new_window)
 
   # ========================= Train Data Button =========================
   def train_classifier(self):
