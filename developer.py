@@ -137,7 +137,7 @@ class Developer:
     wizard_2_mail = Label(wizard_2_Frame, text = "E-Mail: 220160212076.rhythm@gdgu.org", font=my_font, bg="white")
     wizard_2_mail.grid(row = 4, column = 0, padx=4, pady=4, sticky=W)
 
-    wizard_2_skill = Label(wizard_2_Frame, text = "Skills: Web Developmen, Python, Management", font=my_font, bg="white")
+    wizard_2_skill = Label(wizard_2_Frame, text = "Skills: Font-end Web Dev, Python, Management", font=my_font, bg="white")
     wizard_2_skill.grid(row = 5, column = 0, padx=4, pady=4, sticky=W)
 
 
