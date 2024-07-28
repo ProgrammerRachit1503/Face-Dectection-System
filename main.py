@@ -6,6 +6,7 @@ import cv2
 import os
 import face_recognition
 import pickle
+from developer import Developer
 
 
 class Face_Recognition_System:
@@ -123,7 +124,7 @@ class Face_Recognition_System:
     b7 = Button(bg_img, image=self.photoimg10, cursor="hand2")
     b7.place(x=1020, y=450, width=220, height=220)
 
-    b7_6 = Button(bg_img, text="Developer", cursor="hand2", font=("times new roman", 15, "bold"), bg="darkblue", fg="white")
+    b7_6 = Button(bg_img, text="Developer", cursor="hand2", command=Developer, font=("times new roman", 15, "bold"), bg="darkblue", fg="white")
     b7_6.place(x=1020, y=650, width=220, height=40)
 
     # Exit Button
