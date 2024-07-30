@@ -10,7 +10,7 @@ Libraies Used
   
   OpenCV 4.10
   
-  Face_Reecognition 1.2.3
+  Face_Recognition 1.2.3
   
   NumPy 1.26.4
   
