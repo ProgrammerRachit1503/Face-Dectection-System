@@ -18,6 +18,6 @@ Libraies Used
   
   Pickle
   
-  /tCSV
+  CSV
 
 MySQL 8.0 Community Edition
