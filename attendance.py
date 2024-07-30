@@ -91,7 +91,7 @@ class Attendance:
   def attendance(self):
     known_face_encodings, known_face_names = self.load_face_data()
 
-    if (not known_face_encodings) | (not known_face_names):
+    if (not known_face_encodings) or (not known_face_names):
       messagebox.showerror("Error", "Please train data before taking attendance")
       return
 
