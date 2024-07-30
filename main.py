@@ -1,13 +1,12 @@
 from tkinter import *
 from tkinter import messagebox
 from PIL import Image, ImageTk
-from student import Student
-from attendance import Attendance
-from developer import Developer
 import cv2
 import os
 import face_recognition
 import pickle
+from student import Student
+from attendance import Attendance
 from developer import Developer
 
 

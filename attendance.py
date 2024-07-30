@@ -102,7 +102,6 @@ class Attendance:
 
     face_locations = []
     face_encodings = []
-    face_name = []
 
     # Get the current date and time
     now = datetime.now()
