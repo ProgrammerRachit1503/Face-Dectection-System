@@ -51,7 +51,7 @@ class Developer:
     witch_Frame.place(x=100, y=100, width=700,height=215)
 
     # witch image
-    witch_img=Image.open(r"Images\WhatsApp Image 2024-07-27 at 20.52.24_42e62f13.jpg")
+    witch_img=Image.open(r"Images/Prakriti Raj.jpg")
     witch_img=witch_img.resize((200,200), Image.LANCZOS)
     self.witch_photo=ImageTk.PhotoImage(witch_img)
 
@@ -62,7 +62,7 @@ class Developer:
     witch_name = Label(witch_Frame, text = "Name: Prakriti Raj", font=my_font, bg="white")
     witch_name.grid(row = 0, column = 0, padx=4, pady=4, sticky=W)
 
-    witch_enrollment_no = Label(witch_Frame, text = "Enrollment No: 220160212042", font=my_font, bg="white")
+    witch_enrollment_no = Label(witch_Frame, text = "Enrollment No: 220160212099", font=my_font, bg="white")
     witch_enrollment_no.grid(row = 1, column = 0, padx=4, pady=4, sticky=W)
 
     witch_course = Label(witch_Frame, text = "Course: BCA", font=my_font, bg="white")
@@ -71,18 +71,18 @@ class Developer:
     witch_role = Label(witch_Frame, text = "Role: Report Management", font=my_font, bg="white")
     witch_role.grid(row = 3, column = 0, padx=4, pady=4, sticky=W)
     
-    witch_mail = Label(witch_Frame, text = "E-Mail: 220160212042.prakriti@gdgu.org", font=my_font, bg="white")
+    witch_mail = Label(witch_Frame, text = "E-Mail: 220160212099.prakriti@gdgu.org", font=my_font, bg="white")
     witch_mail.grid(row = 4, column = 0, padx=4, pady=4, sticky=W)
 
     witch_skills = Label(witch_Frame, text = "Skills: ", font=my_font, bg="white")
     witch_skills.grid(row = 5, column = 0, padx=4, pady=4, sticky=W)
 
-    # Wizard-1 section
+    # Wizard-1 section - Rachit Jain
     wizard_1_Frame=Frame(bg_img,bd=2, relief=RIDGE,bg="white")
     wizard_1_Frame.place(x=1100, y=100, width=700,height=215)
 
     # wizard-1 image
-    wizard_1_img=Image.open(r"Images\WhatsApp Image 2024-07-27 at 20.52.24_42e62f13.jpg")
+    wizard_1_img=Image.open(r"images/Rachit Jain.jpg")
     wizard_1_img=wizard_1_img.resize((200,200), Image.LANCZOS)
     self.wizard_1_photo=ImageTk.PhotoImage(wizard_1_img)
 
@@ -102,14 +102,14 @@ class Developer:
     wizard_1_role = Label(wizard_1_Frame, text = "Role: Coder", font=my_font, bg="white")
     wizard_1_role.grid(row = 3, column = 0, padx=4, pady=4, sticky=W)
     
-    wizard_1_mail = Label(wizard_1_Frame, text = "E-Mail: 2201602120.rachit@gdgu.org", font=my_font, bg="white")
+    wizard_1_mail = Label(wizard_1_Frame, text = "E-Mail: 220160212042.rachit@gdgu.org", font=my_font, bg="white")
     wizard_1_mail.grid(row = 4, column = 0, padx=4, pady=4, sticky=W)
 
-    wizard_1_skill = Label(wizard_1_Frame, text = "Skills: Python, DSA, Full Stack Web Dev", font=my_font, bg="white")
+    wizard_1_skill = Label(wizard_1_Frame, text = "Skills: Python with DSA, Full Stack Web Dev", font=my_font, bg="white")
     wizard_1_skill.grid(row = 5, column = 0, padx=4, pady=4, sticky=W)
 
 
-    # Wizard-2 section
+    # Wizard-2 section - Rhythm
     wizard_2_Frame=Frame(bg_img,bd=2, relief=RIDGE,bg="white")
     wizard_2_Frame.place(x=100, y=340, width=700,height=215)
 
@@ -141,12 +141,12 @@ class Developer:
     wizard_2_skill.grid(row = 5, column = 0, padx=4, pady=4, sticky=W)
 
 
-    # Wizard-3 section
+    # Wizard-3 section - Rahul Sehraya
     wizard_3_Frame=Frame(bg_img,bd=2, relief=RIDGE,bg="white")
     wizard_3_Frame.place(x=1100, y=340, width=700,height=215)
 
     # wizard-3 image
-    wizard_3_img=Image.open(r"Images\WhatsApp Image 2024-07-27 at 20.52.24_42e62f13.jpg")
+    wizard_3_img=Image.open(r"images/Rahul Sehraya.jpg")
     wizard_3_img=wizard_3_img.resize((200,200), Image.LANCZOS)
     self.wizard_3_photo=ImageTk.PhotoImage(wizard_3_img)
 
@@ -157,16 +157,16 @@ class Developer:
     wizard_3_name = Label(wizard_3_Frame, text = "Name: Rahul Sehraya", font=my_font, bg="white")
     wizard_3_name.grid(row = 0, column = 0, padx=4, pady=4, sticky=W)
 
-    wizard_3_enrollment_no = Label(wizard_3_Frame, text = "Enrollment No: 2201602120", font=my_font, bg="white")
+    wizard_3_enrollment_no = Label(wizard_3_Frame, text = "Enrollment No: 220160212023", font=my_font, bg="white")
     wizard_3_enrollment_no.grid(row = 1, column = 0, padx=4, pady=4, sticky=W)
 
     wizard_3_course = Label(wizard_3_Frame, text = "Course: BCA", font=my_font, bg="white")
     wizard_3_course.grid(row = 2, column = 0, padx=4, pady=4, sticky=W)
 
-    wizard_3_role = Label(wizard_3_Frame, text = "Role: Coder", font=my_font, bg="white")
+    wizard_3_role = Label(wizard_3_Frame, text = "Role: Coder, Report Management", font=my_font, bg="white")
     wizard_3_role.grid(row = 3, column = 0, padx=4, pady=4, sticky=W)
     
-    wizard_3_mail = Label(wizard_3_Frame, text = "E-Mail: 2201602120.rahul@gdgu.org", font=my_font, bg="white")
+    wizard_3_mail = Label(wizard_3_Frame, text = "E-Mail: 220160212023cl.rahul@gdgu.org", font=my_font, bg="white")
     wizard_3_mail.grid(row = 4, column = 0, padx=4, pady=4, sticky=W)
 
     wizard_3_skill = Label(wizard_3_Frame, text = "Skills: ", font=my_font, bg="white")
@@ -178,14 +178,14 @@ class Developer:
     mentor_Frame.place(x=605, y=600, width=700,height=215)
 
     # mentor image
-    mentor_img=Image.open(r"Images\WhatsApp Image 2024-07-27 at 20.52.24_42e62f13.jpg")
+    mentor_img=Image.open(r"Images/Prakriti Raj.jpg")
     mentor_img=mentor_img.resize((200,200), Image.LANCZOS)
     self.mentor_photo=ImageTk.PhotoImage(mentor_img)
 
     wizard=Label(mentor_Frame, image=self.mentor_photo)
     wizard.place(x=490 ,y=5 , width=200, height=200)
 
-    # mentor details
+    # Mentor details
     mentor_name = Label(mentor_Frame, text = "Name: Mrs. Manka Sharma", font=my_font, bg="white")
     mentor_name.grid(row = 0, column = 0, padx=4, pady=4, sticky=W)
 
