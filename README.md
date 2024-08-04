@@ -1,23 +1,23 @@
-Requirements :-
+# Requirements :-
 
-Python  3.12
+- Python  3.12
+- MySQL 8.0 Community Edition
 
-Libraies Used 
+# Libraies Used 
 
-  Tkinter
+  - Tkinter
   
-  Pillow 10.2
+  - Pillow 10.2
   
-  OpenCV 4.10
+  - OpenCV 4.10
   
-  Face_Recognition 1.2.3
+  - Face_Recognition 1.2.3
   
-  NumPy 1.26.4
+  - NumPy 1.26.4
   
-  MySQL Connector 9.0
+  - MySQL Connector 9.0
   
-  Pickle
+  - Pickle
   
-  CSV
+  - CSV
 
-MySQL 8.0 Community Edition
