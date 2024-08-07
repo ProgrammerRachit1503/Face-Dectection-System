@@ -3,6 +3,7 @@
     "frontalface",
     "Goenka",
     "photoimg",
-    "textvariable"
+    "textvariable",
+    "Tkinter"
   ]
 }

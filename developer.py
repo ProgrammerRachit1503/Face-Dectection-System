@@ -166,7 +166,7 @@ class Developer:
     wizard_3_role = Label(wizard_3_Frame, text = "Role: Coder, Report Management", font=my_font, bg="white")
     wizard_3_role.grid(row = 3, column = 0, padx=4, pady=4, sticky=W)
     
-    wizard_3_mail = Label(wizard_3_Frame, text = "E-Mail: 220160212023cl.rahul@gdgu.org", font=my_font, bg="white")
+    wizard_3_mail = Label(wizard_3_Frame, text = "E-Mail: 220160212023.rahul@gdgu.org", font=my_font, bg="white")
     wizard_3_mail.grid(row = 4, column = 0, padx=4, pady=4, sticky=W)
 
     wizard_3_skill = Label(wizard_3_Frame, text = "Skills: ", font=my_font, bg="white")

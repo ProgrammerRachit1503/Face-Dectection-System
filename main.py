@@ -9,7 +9,6 @@ from student import Student
 from attendance import Attendance
 from developer import Developer
 
-
 class Face_Recognition_System:
   def __init__(self, root) -> None:
     self.root = root

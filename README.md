@@ -3,7 +3,7 @@
 - Python  3.12
 - MySQL 8.0 Community Edition
 
-# Libraies Used 
+# Libraries Used  
 
   - Tkinter
   
@@ -20,4 +20,3 @@
   - Pickle
   
   - CSV
-

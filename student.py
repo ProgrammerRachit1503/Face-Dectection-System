@@ -460,25 +460,17 @@ class Student:
         conn.close()
 
         # ============ Load Predifined data on face frontal from openCV ==========
-        face_classifier=cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
-
-        def face_cropped(img):
-          faces = face_classifier.detectMultiScale(img,1.3,5)
-          for (x,y,w,h) in faces:
-            face_cropped = img[y:y+h+25, x:x+w+50]
-            return face_cropped
-
         cap = cv2.VideoCapture(0)
         _, my_frame = cap.read()
         
-        Face_value = face_cropped(my_frame)
+        Face_value = cv2.resize(my_frame, (0, 0), fx=0.5, fy=0.5)
 
         if Face_value is not None:
-          face = cv2.resize(Face_value, (1920,1080))
+          face = Face_value
           file_name_path = f"data/student_{self.var_enrollment_no.get()}_{self.var_student_name.get()}_.jpg"
 
           cv2.imwrite(file_name_path, face)
-          cv2.imshow("Cropped Face", face)
+          cv2.imshow("Camera", face)
           cv2.waitKey(1000)
 
           cap.release()
