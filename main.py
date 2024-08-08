@@ -165,7 +165,11 @@ class Face_Recognition_System:
       print("Error: No valid image files found in the data directory.")
       messagebox.showerror("Error","No valid image files found in the data directory.")
       return
-
+    
+    file_path = "known_faces.pkl"
+    if os.path.exists(file_path):
+      os.remove(file_path)
+    
     with open("known_faces.pkl", "wb") as f:
       pickle.dump((known_face_encodings, known_face_names), f)
     
