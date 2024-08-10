@@ -87,6 +87,60 @@ Command to install to MySQL Connector
 **Note :-** Tkinter, CSV, and Pickle are built-in Python libraries, no pip installation required.
 
 
+## Project Setup Steps
+
+Before running the project, follow these steps to set up the database and configure the project settings.
+
+### Step 1: Access MySQL Command Line
+
+Open the MySQL command line and enter your password to initiate the session.
+
+### Step 2: Create Database
+
+Create a new database to store student details:
+
+```bash
+  CREATE DATABASE < Database Name >;
+```
+```bash
+  USE < Database Name >;
+```
+
+### Step 3: Create Student Table
+
+Create a table to store student details:
+
+
+```bash
+  CREATE TABLE `student` (
+  `Department` VARCHAR(45) NOT NULL,
+  `Course` VARCHAR(45) NULL DEFAULT NULL,
+  `Year` VARCHAR(45) NULL DEFAULT NULL,
+  `Semester` VARCHAR(45) NULL DEFAULT NULL,
+  `StudentName` VARCHAR(45) NOT NULL,
+  `EnrollmentNumber` VARCHAR(15) NOT NULL,
+  `StudentDivision` VARCHAR(45) NULL DEFAULT NULL,
+  `Gender` VARCHAR(10) NULL DEFAULT NULL,
+  `StudentEMail` VARCHAR(80) NULL DEFAULT NULL,
+  `StudentPhone` VARCHAR(15) NULL DEFAULT NULL,
+  `Address` VARCHAR(250) NULL DEFAULT NULL,
+  `PhotoSample` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`EnrollmentNumber`));
+```
+
+### Step 4: Configure Database Settings
+
+Open `student.py` file and update the following variables with your system's database settings:
+
+- `self.mysql_host`: Your MySQL host address
+- `self.mysql_username`: Your MySQL username
+- `self.mysql_pass`: Your MySQL password
+- `self.mysql_DB`: Your MySQL database name
+- `self.mysql_port`: Your MySQL port number (default is usually 3306)
+
+Make sure to replace the existing values with your own database credentials to establish a successful connection.
+
+
 ## Contributing
 
 Pull requests are welcome. 
