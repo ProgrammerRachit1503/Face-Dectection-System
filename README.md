@@ -20,6 +20,8 @@ To run this project, you will need to install the following:
 
 **Python  3.12 with libraries**
 
+&nbsp;&nbsp; Download [Python 3.12](https://www.python.org/downloads/release/python-3125/) from here.
+
 | libraries Used        | Version       | Description                                        |
 | :--------             | :----------   | :------------------------------------------------- |
 | **Tkinter**           | **N/A**       | Create graphical user interfaces.                  |
@@ -35,10 +37,11 @@ To run this project, you will need to install the following:
 
 **MySQL 8.0 Community Edition**
 
+&nbsp;&nbsp; Download [MySQL 8.0](https://dev.mysql.com/downloads/installer/) from here.
 
 ## Installation
 
-Install all libraries in you virtual environment for avoiding any conflicts with already install libraries.
+Install all libraries in you virtual environment for avoiding any conflicts with already install libraries or installing any libraries in future.
 How to setup [virtual environment in python 3.12](https://youtu.be/hC5rfoIY8nU).
 
 After creating and activating virtual environment, run command below:
