@@ -31,9 +31,10 @@ To run this project, you will need to install the following:
 | **Pickle**            | **N/A**       | Serializes data using Pickle for efficient storage.|
 | **CSV**               | **N/A**       | Exports data to CSV files for further analysis.    |
 
+**Note :-** Face Recognition library depends on NumPy 1.26.4, which is not forward compatible with newer NumPy versions. 
+
 **MySQL 8.0 Community Edition**
 
-**Note :-** Face Recognition library depends on NumPy 1.26.4, which is not forward compatible with newer NumPy versions. 
 
 
 ## Installation
