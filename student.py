@@ -23,7 +23,6 @@ class Student:
     self.var_stu_email = StringVar()
     self.var_stu_phone = StringVar()
     self.var_address = StringVar()
-    self.var_teacher = StringVar()
 
     # First Image
     img = Image.open(r"Images/face.jpeg")
@@ -172,13 +171,6 @@ class Student:
     student_Address_entry = ttk.Entry(class_Student_Frame, textvariable=self.var_address, font=("times new roman", 15, "bold"))
     student_Address_entry.grid(row = 3, column=1, padx=10, pady=15, sticky=W)
 
-    # Teacher name
-    Student_Teacher_name_lbl = Label(class_Student_Frame, text = "Teacher Name:", font=("times new roman", 15, "bold"), bg="white")
-    Student_Teacher_name_lbl.grid(row = 3, column = 2, padx=10, pady=15, sticky=W)
-
-    student_Teacher_name_entry = ttk.Entry(class_Student_Frame, textvariable=self.var_teacher, font=("times new roman", 15, "bold"))
-    student_Teacher_name_entry.grid(row = 3, column=3, padx=10, pady=15, sticky=W)
-
     # Radio Buttons
     self.var_radio = StringVar()
     radio_btn_1 = ttk.Radiobutton(class_Student_Frame, variable=self.var_radio, text="Take Photo Sample", value="Yes")
@@ -267,7 +259,6 @@ class Student:
     self.student_table.heading("Student E-Mail", text="Student E-Mail")
     self.student_table.heading("Student Phone No.", text="Student Phone No.")
     self.student_table.heading("Address", text="Address")
-    self.student_table.heading("Teacher Name", text="Teacher Name")
     self.student_table.heading("Photo", text="Photo Sample Status")
     self.student_table["show"] = "headings"
 
@@ -282,7 +273,6 @@ class Student:
     self.student_table.column("Student E-Mail", width=100)
     self.student_table.column("Student Phone No.", width=100)
     self.student_table.column("Address", width=100)
-    self.student_table.column("Teacher Name", width=100)
     self.student_table.column("Photo", width=150)
 
     self.student_table.pack(fill=BOTH, expand=1)
@@ -313,10 +303,9 @@ class Student:
           self.var_stu_email.get(),
           self.var_stu_phone.get(),
           self.var_address.get(),
-          self.var_teacher.get(),
           self.var_radio.get()
         )
-        my_cursor.execute("insert into student values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", my_tuple)
+        my_cursor.execute("insert into student values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", my_tuple)
 
         conn.commit()
         self.fetch_data()
@@ -359,8 +348,7 @@ class Student:
     self.var_stu_email.set(data[8]),
     self.var_stu_phone.set(data[9]),
     self.var_address.set(data[10]),
-    self.var_teacher.set(data[11]),
-    self.var_radio.set(data[12])
+    self.var_radio.set(data[11])
 
   # ================ Update data ================
   def update_data(self):
@@ -385,13 +373,12 @@ class Student:
             self.var_stu_email.get(),
             self.var_stu_phone.get(),
             self.var_address.get(),
-            self.var_teacher.get(),
             self.var_radio.get(),
             self.var_enrollment_no.get()
           )
           
           my_cursor = conn.cursor()
-          my_cursor.execute("update student set Department=%s, Course=%s, Year=%s, Semester=%s, StudentName=%s, StudentDivision=%s, Gender=%s, StudentEMail=%s, StudentPhone=%s, Address=%s, Teacher=%s, PhotoSample=%s where EnrollmentNumber=%s", my_tuple)
+          my_cursor.execute("update student set Department=%s, Course=%s, Year=%s, Semester=%s, StudentName=%s, StudentDivision=%s, Gender=%s, StudentEMail=%s, StudentPhone=%s, Address=%s, PhotoSample=%s where EnrollmentNumber=%s", my_tuple)
         
         elif not update:
           return
@@ -442,7 +429,6 @@ class Student:
     self.var_stu_email.set(""),
     self.var_stu_phone.set(""),
     self.var_address.set(""),
-    self.var_teacher.set(""),
     self.var_radio.set("")
 
   # ============ Generate data set or take a photo sample =============
