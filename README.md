@@ -36,7 +36,6 @@ To run this project, you will need to install the following:
 **MySQL 8.0 Community Edition**
 
 
-
 ## Installation
 
 Install all libraries in you virtual environment for avoiding any conflicts with already install libraries.
