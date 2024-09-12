@@ -87,7 +87,7 @@ class Developer:
 
         # Wizard-2 section - Rhythm
         create_section(
-            bg_img, 100, 340, 700, 215, r"Images\WhatsApp Image 2024-07-21 at 12.53.14 PM.jpeg",
+            bg_img, 100, 340, 700, 215, r"Images/Rhythm Gupta.jpeg",
             [
                 "Name: Rhythm",
                 "Enrollment No: 220160212076",
