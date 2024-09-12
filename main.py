@@ -18,169 +18,71 @@ class Face_Recognition_System:
 
         fonts = ("times new roman", 15, "bold")
 
-        # First Image
-        img = Image.open(r"Images/face.jpeg")
-        img = img.resize((640, 200), Image.LANCZOS)
-        self.photoimg = ImageTk.PhotoImage(img)
+        def load_image(path, size):
+            img = Image.open(path)
+            img = img.resize(size, Image.LANCZOS)
+            return ImageTk.PhotoImage(img)
 
-        f_lbl = Label(self.root, image=self.photoimg)
-        f_lbl.place(x=0, y=0, width=640, height=200)
+        def create_button(image, text, x, y, command):
+            btn_image = Button(bg_img, image=image, cursor="hand2", command=command)
+            btn_image.place(x=x, y=y, width=220, height=220)
+            btn_text = Button(
+                bg_img,
+                text=text,
+                cursor="hand2",
+                font=fonts,
+                bg="darkblue",
+                fg="white",
+                command=command,
+            )
+            btn_text.place(x=x, y=y + 200, width=220, height=40)
+
+        # First Image
+        self.photoimg = load_image(r"Images/face.jpeg", (640, 200))
+        Label(self.root, image=self.photoimg).place(x=0, y=0, width=640, height=200)
 
         # Second Image
-        img1 = Image.open(r"images/Gd Goenka Logo.jpg")
-        img1 = img1.resize((630, 200), Image.LANCZOS)
-        self.photoimg1 = ImageTk.PhotoImage(img1)
+        self.photoimg1 = load_image(r"images/Gd Goenka Logo.jpg", (630, 200))
+        Label(self.root, image=self.photoimg1).place(x=640, y=0, width=640, height=200)
 
-        f_lbl = Label(self.root, image=self.photoimg1)
-        f_lbl.place(x=640, y=0, width=640, height=200)
+        # Third Image
+        self.photoimg2 = load_image(r"Images/face.jpeg", (640, 200))
+        Label(self.root, image=self.photoimg2).place(x=1280, y=0, width=640, height=200)
 
-        #  Third Image
-        self.photoimg2 = ImageTk.PhotoImage(img)
-
-        f_lbl = Label(self.root, image=self.photoimg2)
-        f_lbl.place(x=1280, y=0, width=640, height=200)
-
-        #  BG Image
-        img3 = Image.open(r"Images/GD Goenka University.jpg")
-        img3 = img3.resize((1920, 880), Image.LANCZOS)
-        self.photoimg3 = ImageTk.PhotoImage(img3)
-
+        # BG Image
+        self.photoimg3 = load_image(r"Images/GD Goenka University.jpg", (1920, 880))
         bg_img = Label(self.root, image=self.photoimg3)
         bg_img.place(x=0, y=200, width=1920, height=880)
 
         # Title Label
-        title_lbl = Label(
+        Label(
             bg_img,
             text="FACE RECOGNITION ATTENDANCE SYSTEM SOFTWARE",
             font=("times new roman", 35, "bold"),
             bg="blue",
             fg="red",
-        )
-        title_lbl.place(x=0, y=0, width=1920, height=50)
+        ).place(x=0, y=0, width=1920, height=50)
 
-        # Student Button
-        img4 = Image.open(r"Images/students.jpg")
-        img4 = img4.resize((220, 220), Image.LANCZOS)
-        self.photoimg4 = ImageTk.PhotoImage(img4)
+        # Buttons
+        self.photoimg4 = load_image(r"Images/students.jpg", (220, 220))
+        create_button(self.photoimg4, "Student Details", 200, 100, self.student_details)
 
-        b1 = Button(
-            bg_img, image=self.photoimg4, cursor="hand2", command=self.student_details
-        )
-        b1.place(x=200, y=100, width=220, height=220)
+        self.photoimg6 = load_image(r"Images/attendance System.jpeg", (220, 220))
+        create_button(self.photoimg6, "Attendance", 820, 100, self.attendance_btn)
 
-        b1_1 = Button(
-            bg_img,
-            text="Student Details",
-            cursor="hand2",
-            font=fonts,
-            bg="darkblue",
-            fg="white",
-            command=self.student_details,
-        )
-        b1_1.place(x=200, y=300, width=220, height=40)
+        self.photoimg8 = load_image(r"Images/training.jpeg", (220, 220))
+        create_button(self.photoimg8, "Train Face", 200, 450, self.train_classifier)
 
-        # Attendance Button
-        img6 = Image.open(r"Images/attendance System.jpeg")
-        img6 = img6.resize((220, 220), Image.LANCZOS)
-        self.photoimg6 = ImageTk.PhotoImage(img6)
+        self.photoimg9 = load_image(r"images/multi face.jpg", (220, 220))
+        create_button(self.photoimg9, "Photos", 820, 450, self.open_data_dir)
 
-        b3 = Button(
-            bg_img, image=self.photoimg6, cursor="hand2", command=self.attendance_btn
-        )
-        b3.place(x=820, y=100, width=220, height=220)
+        self.photoimg10 = load_image(r"Images/developer.webp", (220, 220))
+        create_button(self.photoimg10, "Developer", 1420, 100, self.dev_btn)
 
-        b3_3 = Button(
-            bg_img,
-            text="Attendance",
-            cursor="hand2",
-            font=fonts,
-            bg="darkblue",
-            fg="white",
-            command=self.attendance_btn,
-        )
-        b3_3.place(x=820, y=300, width=220, height=40)
+        self.photoimg11 = load_image(r"Images/exit.jpeg", (220, 220))
+        create_button(self.photoimg11, "Exit", 1420, 450, root.destroy)
 
-        # Train Face Button
-        img8 = Image.open(r"Images/training.jpeg")
-        img8 = img8.resize((220, 220), Image.LANCZOS)
-        self.photoimg8 = ImageTk.PhotoImage(img8)
-
-        b5 = Button(
-            bg_img, image=self.photoimg8, cursor="hand2", command=self.train_classifier
-        )
-        b5.place(x=200, y=450, width=220, height=220)
-
-        b5_5 = Button(
-            bg_img,
-            text="Train Face",
-            cursor="hand2",
-            command=self.train_classifier,
-            font=fonts,
-            bg="darkblue",
-            fg="white",
-        )
-        b5_5.place(x=200, y=650, width=220, height=40)
-
-        # Photos Button
-        img9 = Image.open(r"images/multi face.jpg")
-        img9 = img9.resize((220, 220), Image.LANCZOS)
-        self.photoimg9 = ImageTk.PhotoImage(img9)
-
-        b6 = Button(
-            bg_img, image=self.photoimg9, cursor="hand2", command=self.open_data_dir
-        )
-        b6.place(x=820, y=450, width=220, height=220)
-
-        b6_6 = Button(
-            bg_img,
-            text="Photos",
-            cursor="hand2",
-            command=self.open_data_dir,
-            font=fonts,
-            bg="darkblue",
-            fg="white",
-        )
-        b6_6.place(x=820, y=650, width=220, height=40)
-
-        # Developer Button
-        img10 = Image.open(r"Images/developer.webp")
-        img10 = img10.resize((220, 220), Image.LANCZOS)
-        self.photoimg10 = ImageTk.PhotoImage(img10)
-
-        b7 = Button(bg_img, image=self.photoimg10, cursor="hand2", command=self.dev_btn)
-        b7.place(x=1420, y=100, width=220, height=220)
-
-        b7_6 = Button(
-            bg_img,
-            text="Developer",
-            cursor="hand2",
-            font=fonts,
-            bg="darkblue",
-            fg="white",
-            command=self.dev_btn,
-        )
-        b7_6.place(x=1420, y=300, width=220, height=40)
-
-        # Exit Button
-        img11 = Image.open(r"Images/exit.jpeg")
-        img11 = img11.resize((220, 220), Image.LANCZOS)
-        self.photoimg11 = ImageTk.PhotoImage(img11)
-
-        b8 = Button(bg_img, image=self.photoimg11, cursor="hand2", command=root.destroy)
-        b8.place(x=1420, y=450, width=220, height=220)
-
-        b8_6 = Button(
-            bg_img,
-            text="Exit",
-            cursor="hand2",
-            font=fonts,
-            bg="darkblue",
-            fg="white",
-            command=root.destroy,
-        )
-        b8_6.place(x=1420, y=650, width=220, height=40)
-
-    # ========================= Function Buttons =========================
+    # ========================= Function Buttons ===============================
     # ========================= Student Details Button =========================
     def student_details(self):
         self.new_window = Toplevel(self.root)
