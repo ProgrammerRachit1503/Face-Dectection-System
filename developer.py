@@ -240,7 +240,7 @@ class Developer:
         mentor_Frame.place(x=605, y=600, width=700, height=215)
 
         # mentor image
-        mentor_img = Image.open(r"Images/Prakriti Raj.jpg")
+        mentor_img = Image.open(r"Images/Gd Goenka Logo.jpg")
         mentor_img = mentor_img.resize((200, 200), Image.LANCZOS)
         self.mentor_photo = ImageTk.PhotoImage(mentor_img)
 

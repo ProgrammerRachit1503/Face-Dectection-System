@@ -26,9 +26,9 @@ class Student:
 
         self.mysql_host = "localhost"
         self.mysql_username = "root"
-        self.mysql_pass = "7575"
+        self.mysql_pass = "12345@67890"
         self.mysql_DB = "face_recognizer"
-        self.mysql_port = 3306
+        self.mysql_port = 3304
 
         # Load and place images
         self.load_and_place_image("Images/face.jpeg", 0, 0, 640, 200)
@@ -642,23 +642,48 @@ class Student:
 
     # ============ Validation Functions =============
     # ============ Validation Phone Number =============
+    # def validate_phone(self, action, value_if_allowed):
+    #     if action == "1":  # Insert action
+    #         if value_if_allowed.isdigit():
+    #             if len(value_if_allowed) <= 10:  # Limit to 10 digits
+    #                 return True
+    #             else:
+    #                 self.show_validation_error("Phone number cannot exceed 10 digits.")
+    #                 return False
+    #         else:
+    #             self.show_validation_error("Only digits are allowed in the phone number.")
+    #             return False
+    #     elif action == "0":  # Delete action
+    #         return True
+    #     else:
+    #         return False
+
     def validate_phone(self, action, value_if_allowed):
         if action == "1":  # Insert action
             if value_if_allowed.isdigit():
-                if len(value_if_allowed) <= 10:  # Limit to 10 digits
+                if len(value_if_allowed) <= 10:
                     return True
                 else:
                     self.show_validation_error("Phone number cannot exceed 10 digits.")
-                    return False
+            elif any(char.isalpha() for char in value_if_allowed):
+                self.show_validation_error("Alphabets are not allowed in the phone number.")
             else:
-                self.show_validation_error(
-                    "Only digits are allowed in the phone number."
-                )
-                return False
+                self.show_validation_error("Only digits are allowed in the phone number.")
+            return False
         elif action == "0":  # Delete action
             return True
         else:
             return False
+
+def show_validation_error(self, message):
+    """
+    Display a validation error message.
+
+    Parameters:
+    - message (str): The error message to display.
+    """
+    messagebox.showerror("Invalid Input", message, parent=self.root)
+
 
     def show_validation_error(self, message):
         """
