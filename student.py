@@ -34,7 +34,9 @@ class Student:
         self.load_and_place_image("Images/face.jpeg", 0, 0, 640, 200)
         self.load_and_place_image("Images/attendance.jpeg", 640, 0, 640, 200)
         self.load_and_place_image("Images/face.jpeg", 1280, 0, 640, 200)
-        self.load_and_place_image("Images/GD Goenka University.jpg", 0, 200, 1920, 880, bg=True)
+        self.load_and_place_image(
+            "Images/GD Goenka University.jpg", 0, 200, 1920, 880, bg=True
+        )
 
         title_lbl = Label(
             self.root,
@@ -60,7 +62,9 @@ class Student:
         )
         left_Frame.place(x=10, y=10, width=940, height=760)
 
-        self.load_and_place_image("Images/face.jpeg", 10, 0, 920, 150, parent=left_Frame)
+        self.load_and_place_image(
+            "Images/face.jpeg", 10, 0, 920, 150, parent=left_Frame
+        )
 
         # Current course
         current_course_Frame = LabelFrame(
@@ -73,10 +77,52 @@ class Student:
         )
         current_course_Frame.place(x=10, y=160, width=920, height=150)
 
-        self.create_label_combobox(current_course_Frame, "Department", self.var_department, 0, 0, ["Select the Department", "IT", "Computers", "Medical", "Civil", "Electrical"])
-        self.create_label_combobox(current_course_Frame, "Course", self.var_course, 0, 2, ["Select the Course", "B.Tech CSE", "BCA (AI/ML)", "B.Tech Civil", "B.Pharma", "B.Tech EE"])
-        self.create_label_combobox(current_course_Frame, "Year", self.var_year, 1, 0, ["Select the Year", "2020", "2021", "2022", "2023", "2024"])
-        self.create_label_combobox(current_course_Frame, "Semester", self.var_semester, 1, 2, ["Select the Semester", "1st", "2nd", "3rd", "4th"])
+        self.create_label_combobox(
+            current_course_Frame,
+            "Department",
+            self.var_department,
+            0,
+            0,
+            [
+                "Select the Department",
+                "IT",
+                "Computers",
+                "Medical",
+                "Civil",
+                "Electrical",
+            ],
+        )
+        self.create_label_combobox(
+            current_course_Frame,
+            "Course",
+            self.var_course,
+            0,
+            2,
+            [
+                "Select the Course",
+                "B.Tech CSE",
+                "BCA (AI/ML)",
+                "B.Tech Civil",
+                "B.Pharma",
+                "B.Tech EE",
+            ],
+        )
+        self.create_label_combobox(
+            current_course_Frame,
+            "Year",
+            self.var_year,
+            1,
+            0,
+            ["Select the Year", "2020", "2021", "2022", "2023", "2024"],
+        )
+        self.create_label_combobox(
+            current_course_Frame,
+            "Semester",
+            self.var_semester,
+            1,
+            2,
+            ["Select the Semester", "1st", "2nd", "3rd", "4th"],
+        )
 
         # Class Student Information
         class_Student_Frame = LabelFrame(
@@ -89,13 +135,41 @@ class Student:
         )
         class_Student_Frame.place(x=10, y=320, width=920, height=400)
 
-        self.create_label_entry(class_Student_Frame, "Student Name:", self.var_student_name, 0, 0)
-        self.create_label_entry(class_Student_Frame, "Enrollment No:", self.var_enrollment_no, 0, 2)
-        self.create_label_combobox(class_Student_Frame, "Student Division:", self.var_stu_division, 1, 0, ["Select the Division", "A", "B", "C"])
-        self.create_label_combobox(class_Student_Frame, "Gender:", self.var_gender, 1, 2, ["Male", "Female", "Others"])
-        self.create_label_entry(class_Student_Frame, "Student E-Mail:", self.var_stu_email, 2, 0)
-        self.create_label_entry(class_Student_Frame, "Student Phone Number:", self.var_stu_phone, 2, 2)
+        self.create_label_entry(
+            class_Student_Frame, "Student Name:", self.var_student_name, 0, 0
+        )
+        self.create_label_entry(
+            class_Student_Frame, "Enrollment No:", self.var_enrollment_no, 0, 2
+        )
+        self.create_label_combobox(
+            class_Student_Frame,
+            "Student Division:",
+            self.var_stu_division,
+            1,
+            0,
+            ["Select the Division", "A", "B", "C"],
+        )
+        self.create_label_combobox(
+            class_Student_Frame,
+            "Gender:",
+            self.var_gender,
+            1,
+            2,
+            ["Male", "Female", "Others"],
+        )
+        self.create_label_entry(
+            class_Student_Frame, "Student E-Mail:", self.var_stu_email, 2, 0
+        )
         self.create_label_entry(class_Student_Frame, "Address:", self.var_address, 3, 0)
+
+        self.create_label_entry(
+            class_Student_Frame,
+            "Student Phone Number:",
+            self.var_stu_phone,
+            2,
+            2
+        )
+        # vcmd_phone = (self.root.register(self.validate_phone), "%d", "%P")
 
         # Radio Buttons
         self.var_radio = StringVar()
@@ -150,7 +224,9 @@ class Student:
         )
         right_Frame.place(x=960, y=10, width=940, height=760)
 
-        self.load_and_place_image("images/students.jpg", 10, 0, 920, 150, parent=right_Frame)
+        self.load_and_place_image(
+            "images/students.jpg", 10, 0, 920, 150, parent=right_Frame
+        )
 
         # ================ Search System ================
         Search_Frame = LabelFrame(
@@ -277,21 +353,46 @@ class Student:
             self.bg_img = label
 
     def create_label_combobox(self, parent, text, variable, row, col, values):
-        label = Label(parent, text=text, font=("times new roman", 15, "bold"), bg="white")
+        label = Label(
+            parent, text=text, font=("times new roman", 15, "bold"), bg="white"
+        )
         label.grid(row=row, column=col, padx=10, pady=15, sticky=W)
-        combo = ttk.Combobox(parent, textvariable=variable, font=("times new roman", 15, "bold"), state="readonly")
+        combo = ttk.Combobox(
+            parent,
+            textvariable=variable,
+            font=("times new roman", 15, "bold"),
+            state="readonly",
+        )
         combo["values"] = values
         combo.current(0)
         combo.grid(row=row, column=col + 1, padx=5, pady=15, sticky=W)
 
-    def create_label_entry(self, parent, text, variable, row, col):
-        label = Label(parent, text=text, font=("times new roman", 15, "bold"), bg="white")
+    def create_label_entry(
+        self, parent, text, variable, row, col, validate=None, validatecommand=None
+    ):
+        label = Label(
+            parent, text=text, font=("times new roman", 15, "bold"), bg="white"
+        )
         label.grid(row=row, column=col, padx=10, pady=15, sticky=W)
-        entry = ttk.Entry(parent, textvariable=variable, font=("times new roman", 15, "bold"))
+        entry = ttk.Entry(
+            parent, textvariable=variable, font=("times new roman", 15, "bold")
+        )
+
+        if validate and validatecommand:
+            entry.config(validate=validate, validatecommand=validatecommand)
+
         entry.grid(row=row, column=col + 1, padx=10, pady=15, sticky=W)
 
     def create_button(self, parent, text, command, row, col):
-        button = Button(parent, text=text, command=command, font=("times new roman", 15, "bold"), bg="blue", fg="white", width=18)
+        button = Button(
+            parent,
+            text=text,
+            command=command,
+            font=("times new roman", 15, "bold"),
+            bg="blue",
+            fg="white",
+            width=18,
+        )
         button.grid(row=row, column=col)
 
     def connect_db(self):
@@ -309,10 +410,35 @@ class Student:
     def add_data(self):
         if (
             self.var_department.get() == "Select the Department"
+            or self.var_course.get() == "Select the Course"
+            or self.var_year.get() == "Select the Year"
+            or self.var_semester.get() == "Select the Semester"
             or self.var_student_name.get() == ""
-            or self.var_enrollment_no == ""
+            or self.var_enrollment_no.get() == ""
+            or self.var_stu_division.get() == "Select the Division"
+            or self.var_stu_email.get() == ""
+            or self.var_stu_phone.get() == ""
+            or self.var_address.get() == ""
+            or self.var_radio.get() == ""
         ):
+            print(
+                self.var_department.get() == "Select the Department",
+                self.var_course.get() == "Select the Course",
+                self.var_year.get() == "Select the Year",
+                self.var_semester.get() == "Select the Semester",
+                self.var_student_name.get() == "",
+                self.var_enrollment_no.get() == "",
+                self.var_stu_division == "Select the Division",
+                self.var_stu_email.get() == "",
+                self.var_stu_phone.get() == "",
+                self.var_address.get() == "",
+                self.var_radio.get() == "",
+            )
             messagebox.showerror("Error", "All fields are required", parent=self.root)
+
+        elif len(self.var_stu_phone.get()) != 10:
+            messagebox.showerror("Error", "Add validate phone Number", parent=self.root)
+
         else:
             try:
                 conn = self.connect_db()
@@ -422,10 +548,13 @@ class Student:
                 conn.close()
             except Exception as es:
                 messagebox.showerror("Error", f"Due to :{str(es)}", parent=self.root)
+
     # ================= Delete Data =================
     def delete_data(self):
         if self.var_enrollment_no.get() == "":
-            messagebox.showerror("Error", "Enrollment number is required", parent=self.root)
+            messagebox.showerror(
+                "Error", "Enrollment number is required", parent=self.root
+            )
             return
 
         try:
@@ -444,7 +573,9 @@ class Student:
                     )
                     conn.commit()
 
-                messagebox.showinfo("Delete", "Student Details deleted successfully", parent=self.root)
+                messagebox.showinfo(
+                    "Delete", "Student Details deleted successfully", parent=self.root
+                )
                 self.fetch_data()
                 self.reset_data()
 
@@ -508,6 +639,35 @@ class Student:
         cv2.destroyAllWindows()
         messagebox.showinfo("Result", "Generating data sets completed !!!")
         self.reset_data()
+
+    # ============ Validation Functions =============
+    # ============ Validation Phone Number =============
+    def validate_phone(self, action, value_if_allowed):
+        if action == "1":  # Insert action
+            if value_if_allowed.isdigit():
+                if len(value_if_allowed) <= 10:  # Limit to 10 digits
+                    return True
+                else:
+                    self.show_validation_error("Phone number cannot exceed 10 digits.")
+                    return False
+            else:
+                self.show_validation_error(
+                    "Only digits are allowed in the phone number."
+                )
+                return False
+        elif action == "0":  # Delete action
+            return True
+        else:
+            return False
+
+    def show_validation_error(self, message):
+        """
+        Display a validation error message.
+
+        Parameters:
+        - message (str): The error message to display.
+        """
+        messagebox.showerror("Invalid Input", message, parent=self.root)
 
 
 def main() -> None:
