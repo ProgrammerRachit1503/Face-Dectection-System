@@ -614,7 +614,7 @@ class Student:
                 self.fetch_data()
 
             # ============ Load Predifined data on face frontal from openCV ==========
-            cap = cv2.VideoCapture(0)
+            cap = cv2.VideoCapture(1)
             _, my_frame = cap.read()
 
             Face_value = cv2.resize(my_frame, (0, 0), fx=0.5, fy=0.5)
