@@ -26,9 +26,9 @@ class Student:
 
         self.mysql_host = "localhost"
         self.mysql_username = "root"
-        self.mysql_pass = "12345@67890"
+        self.mysql_pass = "7575"
         self.mysql_DB = "face_recognizer"
-        self.mysql_port = 3304
+        self.mysql_port = 3306
 
         # Load and place images
         self.load_and_place_image("Images/face.jpeg", 0, 0, 640, 200)
@@ -138,9 +138,19 @@ class Student:
         self.create_label_entry(
             class_Student_Frame, "Student Name:", self.var_student_name, 0, 0
         )
+
+        vcmd_enroll = (self.root.register(self.validate_input), "%d", "%P", 12)
+
         self.create_label_entry(
-            class_Student_Frame, "Enrollment No:", self.var_enrollment_no, 0, 2
+            class_Student_Frame,
+            "Enrollment No:",
+            self.var_enrollment_no,
+            0,
+            2,
+            "key",
+            vcmd_enroll,
         )
+
         self.create_label_combobox(
             class_Student_Frame,
             "Student Division:",
@@ -149,6 +159,7 @@ class Student:
             0,
             ["Select the Division", "A", "B", "C"],
         )
+
         self.create_label_combobox(
             class_Student_Frame,
             "Gender:",
@@ -157,19 +168,24 @@ class Student:
             2,
             ["Male", "Female", "Others"],
         )
+
         self.create_label_entry(
             class_Student_Frame, "Student E-Mail:", self.var_stu_email, 2, 0
         )
+
         self.create_label_entry(class_Student_Frame, "Address:", self.var_address, 3, 0)
+
+        vcmd_phone = (self.root.register(self.validate_input), "%d", "%P", 10)
 
         self.create_label_entry(
             class_Student_Frame,
             "Student Phone Number:",
             self.var_stu_phone,
             2,
-            2
+            2,
+            "key",
+            vcmd_phone,
         )
-        # vcmd_phone = (self.root.register(self.validate_phone), "%d", "%P")
 
         # Radio Buttons
         self.var_radio = StringVar()
@@ -179,6 +195,7 @@ class Student:
             text="Take Photo Sample",
             value="Yes",
         )
+
         radio_btn_1.grid(row=4, column=0)
 
         radio_btn_2 = ttk.Radiobutton(
@@ -421,23 +438,13 @@ class Student:
             or self.var_address.get() == ""
             or self.var_radio.get() == ""
         ):
-            print(
-                self.var_department.get() == "Select the Department",
-                self.var_course.get() == "Select the Course",
-                self.var_year.get() == "Select the Year",
-                self.var_semester.get() == "Select the Semester",
-                self.var_student_name.get() == "",
-                self.var_enrollment_no.get() == "",
-                self.var_stu_division == "Select the Division",
-                self.var_stu_email.get() == "",
-                self.var_stu_phone.get() == "",
-                self.var_address.get() == "",
-                self.var_radio.get() == "",
-            )
             messagebox.showerror("Error", "All fields are required", parent=self.root)
 
         elif len(self.var_stu_phone.get()) != 10:
-            messagebox.showerror("Error", "Add validate phone Number", parent=self.root)
+            messagebox.showerror("Error", "Invalidate phone Number", parent=self.root)
+
+        elif len(self.var_enrollment_no.get()) != 12:
+            messagebox.showerror("Error", "Invalidate phone Number", parent=self.root)
 
         else:
             try:
@@ -506,10 +513,25 @@ class Student:
     def update_data(self):
         if (
             self.var_department.get() == "Select the Department"
+            or self.var_course.get() == "Select the Course"
+            or self.var_year.get() == "Select the Year"
+            or self.var_semester.get() == "Select the Semester"
             or self.var_student_name.get() == ""
-            or self.var_enrollment_no == ""
+            or self.var_enrollment_no.get() == ""
+            or self.var_stu_division.get() == "Select the Division"
+            or self.var_stu_email.get() == ""
+            or self.var_stu_phone.get() == ""
+            or self.var_address.get() == ""
+            or self.var_radio.get() == ""
         ):
             messagebox.showerror("Error", "All fields are required", parent=self.root)
+
+        elif len(self.var_stu_phone.get()) != 10:
+            messagebox.showerror("Error", "Invalidate phone Number", parent=self.root)
+
+        elif len(self.var_enrollment_no.get()) != 12:
+            messagebox.showerror("Error", "Invalidate phone Number", parent=self.root)
+
         else:
             try:
                 update = messagebox.askyesno(
@@ -614,7 +636,7 @@ class Student:
                 self.fetch_data()
 
             # ============ Load Predifined data on face frontal from openCV ==========
-            cap = cv2.VideoCapture(1)
+            cap = cv2.VideoCapture(0)
             _, my_frame = cap.read()
 
             Face_value = cv2.resize(my_frame, (0, 0), fx=0.5, fy=0.5)
@@ -642,57 +664,22 @@ class Student:
 
     # ============ Validation Functions =============
     # ============ Validation Phone Number =============
-    # def validate_phone(self, action, value_if_allowed):
-    #     if action == "1":  # Insert action
-    #         if value_if_allowed.isdigit():
-    #             if len(value_if_allowed) <= 10:  # Limit to 10 digits
-    #                 return True
-    #             else:
-    #                 self.show_validation_error("Phone number cannot exceed 10 digits.")
-    #                 return False
-    #         else:
-    #             self.show_validation_error("Only digits are allowed in the phone number.")
-    #             return False
-    #     elif action == "0":  # Delete action
-    #         return True
-    #     else:
-    #         return False
 
-    def validate_phone(self, action, value_if_allowed):
+    def validate_input(self, action, value_if_allowed, max_length):
         if action == "1":  # Insert action
             if value_if_allowed.isdigit():
-                if len(value_if_allowed) <= 10:
+                if len(value_if_allowed) <= int(max_length):
                     return True
                 else:
-                    self.show_validation_error("Phone number cannot exceed 10 digits.")
-            elif any(char.isalpha() for char in value_if_allowed):
-                self.show_validation_error("Alphabets are not allowed in the phone number.")
+                    return False
             else:
-                self.show_validation_error("Only digits are allowed in the phone number.")
-            return False
+                return False
+
         elif action == "0":  # Delete action
             return True
+
         else:
             return False
-
-def show_validation_error(self, message):
-    """
-    Display a validation error message.
-
-    Parameters:
-    - message (str): The error message to display.
-    """
-    messagebox.showerror("Invalid Input", message, parent=self.root)
-
-
-    def show_validation_error(self, message):
-        """
-        Display a validation error message.
-
-        Parameters:
-        - message (str): The error message to display.
-        """
-        messagebox.showerror("Invalid Input", message, parent=self.root)
 
 
 def main() -> None:
