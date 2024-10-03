@@ -3,6 +3,7 @@ from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
 import mysql.connector
 import cv2
+import re
 
 
 class Student:
@@ -425,6 +426,8 @@ class Student:
 
     # ================  Adding Data ================
     def add_data(self):
+        # Regex pattern for basic email validation
+        email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
         if (
             self.var_department.get() == "Select the Department"
             or self.var_course.get() == "Select the Course"
@@ -445,6 +448,8 @@ class Student:
 
         elif len(self.var_enrollment_no.get()) != 12:
             messagebox.showerror("Error", "Invalidate phone Number", parent=self.root)
+        elif not re.match(email_regex, self.var_stu_email.get()):
+            messagebox.showerror("Error", "Invalid email format", parent=self.root)
 
         else:
             try:
@@ -511,6 +516,10 @@ class Student:
 
     # ================ Update data ================
     def update_data(self):
+        # Regex pattern for basic email validation
+        
+        email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
+        
         if (
             self.var_department.get() == "Select the Department"
             or self.var_course.get() == "Select the Course"
@@ -532,6 +541,8 @@ class Student:
         elif len(self.var_enrollment_no.get()) != 12:
             messagebox.showerror("Error", "Invalidate phone Number", parent=self.root)
 
+        elif not re.match(email_regex, self.var_stu_email.get()):
+            messagebox.showerror("Error", "Invalid email format", parent=self.root)
         else:
             try:
                 update = messagebox.askyesno(
@@ -681,6 +692,25 @@ class Student:
         else:
             return False
 
+    # ============ Validation Email =============
+
+    def is_valid_email(email):
+
+        """Check if the email is a valid format."""
+
+    # Regular expression for validating an Email
+
+        regex = r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w+$'
+
+    # If the string matches the regex, it is a valid email
+
+        if re.match(regex, email):
+
+            return True
+
+        else:
+
+            return False
 
 def main() -> None:
     root = Tk()
