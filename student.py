@@ -243,58 +243,8 @@ class Student:
         right_Frame.place(x=960, y=10, width=940, height=760)
 
         self.load_and_place_image(
-            "images/students.jpg", 10, 0, 920, 150, parent=right_Frame
+            "images/students.jpg", 10, 0, 920, 225, parent=right_Frame
         )
-
-        # ================ Search System ================
-        Search_Frame = LabelFrame(
-            right_Frame,
-            bd=2,
-            bg="White",
-            relief="ridge",
-            text="Search System",
-            font=("times new roman", 15, "bold"),
-        )
-        Search_Frame.place(x=10, y=160, width=920, height=70)
-
-        search_lbl = Label(
-            Search_Frame,
-            text="Search By :-",
-            font=("times new roman", 12),
-            bg="pink",
-            fg="blue",
-        )
-        search_lbl.grid(row=0, column=0, padx=10, pady=5, sticky=W)
-
-        search_combo = ttk.Combobox(
-            Search_Frame, font=("times new roman", 12), state="readonly", width=12
-        )
-        search_combo["values"] = ("Select", "Enrollment No", "Phone No")
-        search_combo.current(0)
-        search_combo.grid(row=0, column=1, padx=2, pady=5, sticky=W)
-
-        search_entry = ttk.Entry(Search_Frame, font=("times new roman", 12), width=50)
-        search_entry.grid(row=0, column=2, padx=10, pady=5, sticky=W)
-
-        search_btn = Button(
-            Search_Frame,
-            text="Search",
-            font=("times new roman", 10, "bold"),
-            bg="pink",
-            fg="blue",
-            width=12,
-        )
-        search_btn.grid(row=0, column=3, padx=5)
-
-        show_all_btn = Button(
-            Search_Frame,
-            text="Show All",
-            font=("times new roman", 10, "bold"),
-            bg="pink",
-            fg="blue",
-            width=12,
-        )
-        show_all_btn.grid(row=0, column=4, padx=5)
 
         # Table Frame
         Table_Frame = Frame(right_Frame, bd=2, bg="White", relief="ridge")
