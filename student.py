@@ -3,6 +3,7 @@ from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
 import mysql.connector
 import cv2
+import re
 
 
 class Student:
@@ -441,10 +442,16 @@ class Student:
             messagebox.showerror("Error", "All fields are required", parent=self.root)
 
         elif len(self.var_stu_phone.get()) != 10:
-            messagebox.showerror("Error", "Invalidate phone Number", parent=self.root)
+            messagebox.showerror("Error", "Invalidate Phone Number", parent=self.root)
 
         elif len(self.var_enrollment_no.get()) != 12:
-            messagebox.showerror("Error", "Invalidate phone Number", parent=self.root)
+            messagebox.showerror("Error", "Invalidate Enrollment Number", parent=self.root)
+
+        elif re.match(
+            r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
+            self.var_stu_email.get(),
+        ):
+            messagebox.showerror("Error", "Invalidate Email Address", parent=self.root)
 
         else:
             try:
@@ -527,10 +534,16 @@ class Student:
             messagebox.showerror("Error", "All fields are required", parent=self.root)
 
         elif len(self.var_stu_phone.get()) != 10:
-            messagebox.showerror("Error", "Invalidate phone Number", parent=self.root)
+            messagebox.showerror("Error", "Invalidate Phone Number", parent=self.root)
 
         elif len(self.var_enrollment_no.get()) != 12:
-            messagebox.showerror("Error", "Invalidate phone Number", parent=self.root)
+            messagebox.showerror("Error", "Invalidate Enrollment Number", parent=self.root)
+
+        elif re.match(
+            r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
+            self.var_stu_email.get(),
+        ):
+            messagebox.showerror("Error", "Invalidate Email Address", parent=self.root)
 
         else:
             try:
