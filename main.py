@@ -118,13 +118,14 @@ class Face_Recognition_System:
         known_face_names = []
 
         for student_img in os.listdir(data_dir):
-            img = read_img(f"{data_dir}/{student_img}")
+            if student_img.endswith((".jpg", ".png", ".jpeg")):
+                img = read_img(f"{data_dir}/{student_img}")
 
-            img_encoding = face_recognition.face_encodings(img)[0]
+                img_encoding = face_recognition.face_encodings(img)[0]
 
-            known_face_encodings.append(img_encoding)
-            # converts filename format student_<Enrollment Number>_<Student Name>_.jpg ==> <Enrollment Number>_<Student Name>
-            known_face_names.append("_".join(student_img.split("_")[1:3]))
+                known_face_encodings.append(img_encoding)
+                # converts filename format student_<Enrollment Number>_<Student Name>_.jpg ==> <Enrollment Number>_<Student Name>
+                known_face_names.append("_".join(student_img.split("_")[1:3]))
 
         if not known_face_encodings:
             print("Error: No valid image files found in the data directory.")
