@@ -140,9 +140,7 @@ class Developer:
         wizard_2_Frame.place(x=100, y=340, width=700, height=215)
 
         # wizard-2 image
-        wizard_2_img = Image.open(
-            r"images/Rhythm Gupta.jpeg"
-        )
+        wizard_2_img = Image.open(r"images/Rhythm Gupta.jpeg")
         wizard_2_img = wizard_2_img.resize((200, 200), Image.LANCZOS)
         self.wizard_2_photo = ImageTk.PhotoImage(wizard_2_img)
 

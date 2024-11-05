@@ -49,7 +49,9 @@ class Attendance:
         Label(self.root, image=self.photoimg2).place(x=1280, y=0, width=640, height=200)
 
         # BG Image
-        self.bg_img = load_and_resize_image(r"Images/GD Goenka University.jpg", (1920, 880))
+        self.bg_img = load_and_resize_image(
+            r"Images/GD Goenka University.jpg", (1920, 880)
+        )
         bg_img = Label(self.root, image=self.bg_img)
         bg_img.place(x=0, y=200, width=1920, height=880)
 
@@ -63,12 +65,34 @@ class Attendance:
         title_lbl.place(x=0, y=0, width=1920, height=50)
 
         # Start Attendance Button
-        self.photoimg4 = load_and_resize_image(r"Images/attendance System.jpeg", (300, 300))
-        create_button(bg_img, self.photoimg4, "Start Attendance", self.attendance, 300, 200, 300, 300)
+        self.photoimg4 = load_and_resize_image(
+            r"Images/attendance System.jpeg", (300, 300)
+        )
+        create_button(
+            bg_img,
+            self.photoimg4,
+            "Start Attendance",
+            self.attendance,
+            300,
+            200,
+            300,
+            300,
+        )
 
         # Check Attendance Button
-        self.photoimg5 = load_and_resize_image(r"images/Check Attendance.jpg", (300, 300))
-        create_button(bg_img, self.photoimg5, "Check Attendance", self.open_attendance_dir, 1250, 200, 300, 300)
+        self.photoimg5 = load_and_resize_image(
+            r"images/Check Attendance.jpg", (300, 300)
+        )
+        create_button(
+            bg_img,
+            self.photoimg5,
+            "Check Attendance",
+            self.open_attendance_dir,
+            1250,
+            200,
+            300,
+            300,
+        )
 
     # ========================= Function Buttons =========================
     def open_attendance_dir(self):
@@ -80,10 +104,9 @@ class Attendance:
                 known_face_encodings, known_face_names = pickle.load(f)
             return known_face_encodings, known_face_names
         except FileNotFoundError:
-            print("Face data file not found.")
             return [], []
 
-    def attendance(self):  # sourcery skip: low-code-quality
+    def attendance(self):
         known_face_encodings, known_face_names = self.load_face_data()
 
         if not known_face_encodings or not known_face_names:
@@ -101,23 +124,28 @@ class Attendance:
         with open(f"Attendance/{current_date}.csv", "w+", newline="") as f:
             line_writer = csv.writer(f)
 
-            frame_interval = 10  # Process every 5th frame
+            frame_interval = 5
             frame_count = 0
 
             while True:
                 _, frame = video_capture.read()
-                frame_count += 1
 
                 small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
                 rgb_small_frame = cv2.cvtColor(small_frame, cv2.COLOR_BGR2RGB)
 
                 if frame_count % frame_interval == 0:
                     face_locations = face_recognition.face_locations(rgb_small_frame)
-                    face_encodings = face_recognition.face_encodings(rgb_small_frame, face_locations)
+                    face_encodings = face_recognition.face_encodings(
+                        rgb_small_frame, face_locations
+                    )
 
                     for face_encoding in face_encodings:
-                        matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
-                        face_distance = face_recognition.face_distance(known_face_encodings, face_encoding)
+                        matches = face_recognition.compare_faces(
+                            known_face_encodings, face_encoding
+                        )
+                        face_distance = face_recognition.face_distance(
+                            known_face_encodings, face_encoding
+                        )
                         best_match_index = np.argmin(face_distance)
 
                         if matches[best_match_index]:
@@ -137,7 +165,16 @@ class Attendance:
                             if name in students:
                                 students.remove(name)
                                 current_time = now.strftime("%H:%M:%S")
-                                line_writer.writerow([name, current_time])
+                                line_writer.writerow(
+                                    [
+                                        name.split("_")[0],
+                                        name.split("_")[1],
+                                        current_time,
+                                    ]
+                                )
+                    frame_count = 0
+
+                frame_count += 1
 
                 cv2.imshow("Attendance", frame)
 
