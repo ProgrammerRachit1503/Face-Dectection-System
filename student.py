@@ -310,6 +310,7 @@ class Student:
         self.student_table.bind("<ButtonRelease>", self.get_cursor)
         self.fetch_data()
 
+    # ====================== UI maker Methods =========================
     def load_and_place_image(self, path, x, y, width, height, bg=False, parent=None):
         img = Image.open(path)
         img = img.resize((width, height), Image.LANCZOS)
@@ -395,11 +396,15 @@ class Student:
             messagebox.showerror("Error", "Invalidate Phone Number", parent=self.root)
 
         elif len(self.var_enrollment_no.get()) != 12:
-            messagebox.showerror("Error", "Invalidate Enrollment Number", parent=self.root)
+            messagebox.showerror(
+                "Error", "Invalidate Enrollment Number", parent=self.root
+            )
 
-        elif re.match(
-            r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
-            self.var_stu_email.get(),
+        elif not (
+            re.match(
+                r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
+                self.var_stu_email.get(),
+            )
         ):
             messagebox.showerror("Error", "Invalidate Email Address", parent=self.root)
 
@@ -487,11 +492,15 @@ class Student:
             messagebox.showerror("Error", "Invalidate Phone Number", parent=self.root)
 
         elif len(self.var_enrollment_no.get()) != 12:
-            messagebox.showerror("Error", "Invalidate Enrollment Number", parent=self.root)
+            messagebox.showerror(
+                "Error", "Invalidate Enrollment Number", parent=self.root
+            )
 
-        elif re.match(
-            r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
-            self.var_stu_email.get(),
+        elif not (
+            re.match(
+                r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
+                self.var_stu_email.get(),
+            )
         ):
             messagebox.showerror("Error", "Invalidate Email Address", parent=self.root)
 
