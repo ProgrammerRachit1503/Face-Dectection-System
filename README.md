@@ -23,7 +23,7 @@ To run this project, you will need to install the following:
 &nbsp;&nbsp; Download [Python 3.12](https://www.python.org/downloads/release/python-3125/) from here.
 
 | libraries Used        | Version       | Description                                        |
-| :--------             | :----------   | :------------------------------------------------- |
+| :-------------------: | :-----------: | :------------------------------------------------: |
 | **Tkinter**           | **N/A**       | Create graphical user interfaces.                  |
 | **Pillow**            | **10.2**      | Manipulate and edit images.                        |
 | **NumPy**             | **1.26.4**    | Efficient numerical computation and data analysis. |
