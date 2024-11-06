@@ -267,7 +267,6 @@ class Student:
                 "Student E-Mail",
                 "Student Phone No.",
                 "Address",
-                "Teacher Name",
                 "Photo",
             ),
             xscrollcommand=scroll_x.set,
