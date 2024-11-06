@@ -632,9 +632,8 @@ class Student:
         cap.release()
         cv2.destroyAllWindows()
         messagebox.showinfo("Result", "Generating data sets completed !!!")
-        self.reset_data()
 
-    # ============ Validation Functions =============
+    # ============ Validation Functions ================
     # ============ Validation Phone Number =============
 
     def validate_input(self, action, value_if_allowed, max_length):
