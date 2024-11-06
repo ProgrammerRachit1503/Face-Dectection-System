@@ -553,7 +553,7 @@ class Student:
 
         try:
             delete = messagebox.askyesno(
-                "Delete",
+                "Delete Student Data",
                 "Are you sure you want to delete student details?",
                 parent=self.root,
             )
@@ -563,12 +563,12 @@ class Student:
                     my_cursor = conn.cursor()
                     my_cursor.execute(
                         "DELETE FROM student WHERE EnrollmentNumber=%s",
-                        (self.var_enrollment_no.get(),),
+                        (self.var_enrollment_no.get()),
                     )
                     conn.commit()
 
                 messagebox.showinfo(
-                    "Delete", "Student Details deleted successfully", parent=self.root
+                    "Delete", "Student Details Deleted Successfully", parent=self.root
                 )
                 self.fetch_data()
                 self.reset_data()
@@ -593,11 +593,7 @@ class Student:
 
     # ============ Generate data set or take a photo sample =============
     def generate_dataset(self):
-        if (
-            self.var_department.get() == "Select the Department"
-            or self.var_student_name.get() == ""
-            or self.var_enrollment_no.get() == ""
-        ):
+        if self.var_student_name.get() == "" or self.var_enrollment_no.get() == "":
             messagebox.showerror("Error", "All fields are required", parent=self.root)
             return
 
@@ -608,36 +604,52 @@ class Student:
                 self.fetch_data()
 
             # ============ Load Predifined data on face frontal from openCV ==========
-            cap = cv2.VideoCapture(0)
-            _, my_frame = cap.read()
+            cam = cv2.VideoCapture(0)
 
-            Face_value = cv2.resize(my_frame, (0, 0), fx=0.5, fy=0.5)
+            instructions = (
+                'Press "Esc" Key to close camera, Press "Spacebar" Key to capture image'
+            )
 
-            if Face_value is not None:
-                self._extracted_from_generate_dataset_23(Face_value, cap)
-            else:
-                messagebox.showerror("Error", "No face detected")
+            while True:
+                ret, my_frame = cam.read()
+
+                if not ret:
+                    messagebox.showerror(
+                        "Error", "Failed to detect Camera.", parent=self.root
+                    )
+                    return
+                cv2.imshow(instructions, my_frame)
+
+                if cv2.waitKey(1) & 0xFF == 27:  # Press Esc to exit window
+                    break
+
+                if cv2.waitKey(1) & 0xFF == 32:  # Press Spacebar to capture image
+                    Face_value = cv2.resize(my_frame, (0, 0), fx=0.5, fy=0.5)
+
+                    if Face_value is not None:
+                        self.__extracted_from_generate_dataset_23__(Face_value)
+                    else:
+                        messagebox.showerror(
+                            "Error", "No face detected", parent=self.root
+                        )
+
+            cam.release()
+            cv2.destroyAllWindows()
 
         except Exception as es:
             messagebox.showerror("Error", f"Due to : {str(es)}", parent=self.root)
 
-    def _extracted_from_generate_dataset_23(self, Face_value, cap):
+    def __extracted_from_generate_dataset_23__(self, Face_value):
         face = Face_value
         file_name_path = f"data/student_{self.var_enrollment_no.get()}_{self.var_student_name.get()}_.jpg"
 
         cv2.imwrite(file_name_path, face)
-        cv2.imshow("Camera", face)
-        cv2.waitKey(1000)
-
-        cap.release()
-        cv2.destroyAllWindows()
-        messagebox.showinfo("Result", "Generating data sets completed !!!")
 
     # ============ Validation Functions ================
     # ============ Validation Phone Number =============
 
     def validate_input(self, action, value_if_allowed, max_length):
-        if action == "1":  # Insert action
+        if action == "1":
             if value_if_allowed.isdigit():
                 if len(value_if_allowed) <= int(max_length):
                     return True
@@ -646,7 +658,7 @@ class Student:
             else:
                 return False
 
-        elif action == "0":  # Delete action
+        elif action == "0":
             return True
 
         else:
