@@ -8,7 +8,6 @@ import pickle
 from datetime import datetime
 import csv
 import numpy as np
-import time
 
 
 class Attendance:
@@ -72,7 +71,7 @@ class Attendance:
             bg_img,
             self.photoimg4,
             "Start Attendance",
-            self.attendance,
+            self.__prompt_for_subject__,
             300,
             200,
             300,
@@ -98,7 +97,7 @@ class Attendance:
     def open_attendance_dir(self):
         os.startfile("Attendance")
 
-    def load_face_data(self):
+    def __load_face_data__(self):
         try:
             with open("known_faces.pkl", "rb") as f:
                 known_face_encodings, known_face_names = pickle.load(f)
@@ -106,8 +105,38 @@ class Attendance:
         except FileNotFoundError:
             return [], []
 
-    def attendance(self):
-        known_face_encodings, known_face_names = self.load_face_data()
+    def __prompt_for_subject__(self):
+        popup = Toplevel(self.root)
+        popup.title("Enter Subject Name")
+        popup.geometry("400x200")
+
+        Label(popup, text="Subject Name:", font=("Arial", 12)).pack(pady=10)
+        subject_entry = Entry(popup, font=("Arial", 12), width=25)
+        subject_entry.pack(pady=5)
+
+        Label(popup, text="Subject Code:", font=("Arial", 12)).pack(pady=10)
+        subject_code_entry = Entry(popup, font=("Arial", 12), width=25)
+        subject_code_entry.pack(pady=5)
+
+        def on_submit():
+            subject = subject_entry.get()
+            subject_code = subject_code_entry.get()
+
+            if subject.strip() == "" and subject_code.strip() == "":
+                messagebox.showerror(
+                    "Input Error", "Subject name or Subject code cannot be empty."
+                )
+            else:
+                popup.destroy()
+                self.attendance(subject, subject_code)
+
+        submit_button = Button(
+            popup, text="Submit", command=on_submit, font=("Arial", 12)
+        )
+        submit_button.pack(pady=10)
+
+    def attendance(self, subject, subject_code):
+        known_face_encodings, known_face_names = self.__load_face_data__()
 
         if not known_face_encodings or not known_face_names:
             messagebox.showerror("Error", "Please train data before taking attendance")
@@ -121,7 +150,9 @@ class Attendance:
         now = datetime.now()
         current_date = now.strftime("%d-%m-%Y")
 
-        with open(f"Attendance/{current_date}.csv", "w+", newline="") as f:
+        with open(
+            f"Attendance/{current_date}_{subject_code}_{subject}.csv", "w+", newline=""
+        ) as f:
             line_writer = csv.writer(f)
 
             frame_interval = 5
@@ -176,7 +207,7 @@ class Attendance:
 
                 frame_count += 1
 
-                cv2.imshow("Attendance", frame)
+                cv2.imshow(f"Attendance of {subject_code} - {subject}", frame)
 
                 if cv2.waitKey(1) & 0xFF == 27:
                     break
