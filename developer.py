@@ -1,42 +1,95 @@
-from tkinter import *
+import tkinter as tk
+from tkinter import Frame, Label, RIDGE, W
 from PIL import Image, ImageTk
-
+from PIL.Image import Resampling  # Modern import for resampling filter
+import os # Used for robust path handling (optional but good)
 
 class Developer:
-    def __init__(self, root) -> None:
+    def __init__(self, root: tk.Tk) -> None:
         self.root = root
+        
+        # This list is CRUCIAL to hold references to all PhotoImage objects.
+        # If you don't store them, Python's garbage collector will discard
+        # them, and your images will disappear from the GUI.
+        self._image_references = []
+        
+        # Store common font as an instance variable
+        self.card_font = ("times new roman", 15)
+
+        self._setup_window()
+        self._create_header()
+        self._create_main_body()
+
+    def _setup_window(self):
+        """Sets up the main window geometry and title."""
         self.root.geometry("1920x1080+0+0")
         self.root.title("Face Recognition System")
 
-        my_font = ("times new roman", 15)
+    def _load_image(self, path: str, size: tuple[int, int]):
+        """
+        A helper method to load, resize, and store an image.
+        Handles FileNotFoundError by creating a placeholder.
+        """
+        try:
+            # Note: Normalized all paths to use 'images/' (lowercase)
+            img = Image.open(path)
+            img = img.resize(size, Resampling.LANCZOS)
+            photo_img = ImageTk.PhotoImage(img)
+            
+            # Add to our list to prevent garbage collection
+            self._image_references.append(photo_img)
+            return photo_img
+        
+        except FileNotFoundError:
+            print(f"Warning: Image file not found at {path}. Creating placeholder.")
+            # Create a grey placeholder image
+            img = Image.new('RGB', size, color='grey')
+            label = f"{size[0]}x{size[1]}\n{os.path.basename(path)}"
+            # (We could draw the text on the image, but for simplicity
+            # we just return a blank grey box)
+            photo_img = ImageTk.PhotoImage(img)
+            self._image_references.append(photo_img)
+            return photo_img
+        
+        except Exception as e:
+            print(f"Error loading image {path}: {e}")
+            return None
 
-        img = Image.open(r"Images/face.jpeg")
-        img = img.resize((640, 200), Image.LANCZOS)
-        self.photon = ImageTk.PhotoImage(img)
+    def _create_header(self):
+        """Creates the top header with three images."""
+        
+        # Left header image
+        img_left = self._load_image(r"images/face.jpeg", (640, 200))
+        if img_left:
+            lbl_left = Label(self.root, image=img_left)
+            lbl_left.place(x=0, y=0, width=640, height=200)
 
-        f_lbl = Label(self.root, image=self.photon)
-        f_lbl.place(x=0, y=0, width=640, height=200)
+        # Center header image
+        img_center = self._load_image(r"images/Gd Goenka Logo.jpg", (630, 200))
+        if img_center:
+            # Note: Original code resized to 630 but placed in a 640-wide widget
+            lbl_center = Label(self.root, image=img_center)
+            lbl_center.place(x=640, y=0, width=640, height=200)
 
-        f_lbl = Label(self.root, image=self.photon)
-        f_lbl.place(x=1280, y=0, width=640, height=200)
+        # Right header image
+        img_right = self._load_image(r"images/face.jpeg", (640, 200))
+        if img_right:
+            lbl_right = Label(self.root, image=img_right)
+            lbl_right.place(x=1280, y=0, width=640, height=200)
 
-        img1 = Image.open(r"images/Gd Goenka Logo.jpg")
-        img1 = img1.resize((630, 200), Image.LANCZOS)
-        self.photoimg1 = ImageTk.PhotoImage(img1)
+    def _create_main_body(self):
+        """Creates the background image, title, and all developer/mentor cards."""
+        
+        # Background Image
+        img_bg = self._load_image(r"images/GD Goenka University.jpg", (1920, 880))
+        
+        # Place background label. It will act as the parent for other widgets.
+        bg_label = Label(self.root, image=img_bg)
+        bg_label.place(x=0, y=200, width=1920, height=880)
 
-        f_lbl = Label(self.root, image=self.photoimg1)
-        f_lbl.place(x=640, y=0, width=640, height=200)
-
-        #  BG Image
-        img3 = Image.open(r"Images/GD Goenka University.jpg")
-        img3 = img3.resize((1920, 880), Image.LANCZOS)
-        self.photoimg3 = ImageTk.PhotoImage(img3)
-
-        bg_img = Label(self.root, image=self.photoimg3)
-        bg_img.place(x=0, y=200, width=1920, height=880)
-
+        # Title Label
         title_lbl = Label(
-            bg_img,
+            bg_label,
             text="DEVELOPERS",
             font=("times new roman", 35, "bold"),
             bg="blue",
@@ -44,243 +97,132 @@ class Developer:
         )
         title_lbl.place(x=0, y=0, width=1920, height=50)
 
-        # Witch section
-        witch_Frame = Frame(bg_img, bd=2, relief=RIDGE, bg="white")
-        witch_Frame.place(x=100, y=100, width=700, height=215)
+        # --- Developer & Mentor Data ---
+        # Separating data from logic makes it easy to add/remove/update people.
+        developer_data = [
+            {
+                "name": "Prakriti Raj",
+                "enrollment": "220160212099",
+                "course": "BCA",
+                "role": "Report Management",
+                "email": "220160212099.prakriti@gdgu.org",
+                "skills": "", # Original was "Skills: "
+                "image_path": r"images/Prakriti Raj.jpg",
+                "pos_x": 100,
+                "pos_y": 100
+            },
+            {
+                "name": "Rachit Jain",
+                "enrollment": "220160212042",
+                "course": "BCA",
+                "role": "Coder",
+                "email": "220160212042.rachit@gdgu.org",
+                "skills": "Python with DSA, Full Stack Web Dev",
+                "image_path": r"images/Rachit Jain.jpg",
+                "pos_x": 1100,
+                "pos_y": 100
+            },
+            {
+                "name": "Rhythm",
+                "enrollment": "220160212076",
+                "course": "BCA",
+                "role": "Leader, Coder",
+                "email": "220160212076.rhythm@gdgu.org",
+                "skills": "Font-end Web Dev, Python, Management",
+                "image_path": r"images/Rhythm Gupta.jpeg",
+                "pos_x": 100,
+                "pos_y": 340
+            },
+            {
+                "name": "Rahul Sehraya",
+                "enrollment": "220160212023",
+                "course": "BCA",
+                "role": "Coder, Report Management",
+                "email": "220160212023.rahul@gdgu.org",
+                "skills": "", # Original was "Skills: "
+                "image_path": r"images/Rahul Sehraya.jpg",
+                "pos_x": 1100,
+                "pos_y": 340
+            }
+        ]
 
-        # witch image
-        witch_img = Image.open(r"Images/Prakriti Raj.jpg")
-        witch_img = witch_img.resize((200, 200), Image.LANCZOS)
-        self.witch_photo = ImageTk.PhotoImage(witch_img)
+        # Loop through the data and create a card for each developer
+        for dev in developer_data:
+            self._create_developer_card(bg_label, dev)
 
-        witch = Label(witch_Frame, image=self.witch_photo)
-        witch.place(x=490, y=5, width=200, height=200)
+        # --- Mentor Card ---
+        # The mentor card is slightly different, so we handle it separately.
+        # We could also make the _create_developer_card function more flexible.
+        mentor_data = {
+            "name": "Mrs. Manka Sharma",
+            "designation": "Position: Assistant Professor GD Goenka University",
+            "email": "manka.sharma@gdgu.org",
+            "role": "Role: Mentor",
+            "skills": "Skills: Python Programming, AI/ML, Data Analytics",
+            "image_path": r"images/Gd Goenka Logo.jpg", # Reusing logo
+            "pos_x": 605,
+            "pos_y": 600
+        }
+        self._create_mentor_card(bg_label, mentor_data)
 
-        # witch details
-        witch_name = Label(
-            witch_Frame, text="Name: Prakriti Raj", font=my_font, bg="white"
-        )
-        witch_name.grid(row=0, column=0, padx=4, pady=4, sticky=W)
 
-        witch_enrollment_no = Label(
-            witch_Frame, text="Enrollment No: 220160212099", font=my_font, bg="white"
-        )
-        witch_enrollment_no.grid(row=1, column=0, padx=4, pady=4, sticky=W)
+    def _create_developer_card(self, parent: tk.Widget, details: dict):
+        """
+        A reusable method to create a single developer card.
+        """
+        frame = Frame(parent, bd=2, relief=RIDGE, bg="white")
+        frame.place(x=details['pos_x'], y=details['pos_y'], width=700, height=215)
 
-        witch_course = Label(witch_Frame, text="Course: BCA", font=my_font, bg="white")
-        witch_course.grid(row=2, column=0, padx=4, pady=4, sticky=W)
+        img = self._load_image(details['image_path'], (200, 200))
+        if img:
+            img_label = Label(frame, image=img)
+            img_label.place(x=490, y=5, width=200, height=200)
 
-        witch_role = Label(
-            witch_Frame, text="Role: Report Management", font=my_font, bg="white"
-        )
-        witch_role.grid(row=3, column=0, padx=4, pady=4, sticky=W)
+        # Create labels from the details dictionary
+        labels_info = [
+            f"Name: {details['name']}",
+            f"Enrollment No: {details['enrollment']}",
+            f"Course: {details['course']}",
+            f"Role: {details['role']}",
+            f"E-Mail: {details['email']}",
+            f"Skills: {details['skills']}"
+        ]
+        
+        for i, text in enumerate(labels_info):
+            lbl = Label(frame, text=text, font=self.card_font, bg="white")
+            lbl.grid(row=i, column=0, padx=4, pady=4, sticky=W)
 
-        witch_mail = Label(
-            witch_Frame,
-            text="E-Mail: 220160212099.prakriti@gdgu.org",
-            font=my_font,
-            bg="white",
-        )
-        witch_mail.grid(row=4, column=0, padx=4, pady=4, sticky=W)
+    def _create_mentor_card(self, parent: tk.Widget, details: dict):
+        """
+        A specific method for the mentor card, which has different fields.
+        """
+        frame = Frame(parent, bd=2, relief=RIDGE, bg="white")
+        frame.place(x=details['pos_x'], y=details['pos_y'], width=700, height=215)
 
-        witch_skills = Label(witch_Frame, text="Skills: ", font=my_font, bg="white")
-        witch_skills.grid(row=5, column=0, padx=4, pady=4, sticky=W)
+        img = self._load_image(details['image_path'], (200, 200))
+        if img:
+            img_label = Label(frame, image=img)
+            img_label.place(x=490, y=5, width=200, height=200)
 
-        # Wizard-1 section - Rachit Jain
-        wizard_1_Frame = Frame(bg_img, bd=2, relief=RIDGE, bg="white")
-        wizard_1_Frame.place(x=1100, y=100, width=700, height=215)
+        # Mentor-specific details
+        # Note: Some original text already included the prefix (e.g., "Role: ...")
+        labels_info = [
+            f"Name: {details['name']}",
+            details['designation'],
+            f"E-Mail: {details['email']}",
+            details['role'],
+            details['skills']
+        ]
 
-        # wizard-1 image
-        wizard_1_img = Image.open(r"images/Rachit Jain.jpg")
-        wizard_1_img = wizard_1_img.resize((200, 200), Image.LANCZOS)
-        self.wizard_1_photo = ImageTk.PhotoImage(wizard_1_img)
-
-        wizard = Label(wizard_1_Frame, image=self.wizard_1_photo)
-        wizard.place(x=490, y=5, width=200, height=200)
-
-        # wizard-1 details
-        wizard_1_name = Label(
-            wizard_1_Frame, text="Name: Rachit Jain", font=my_font, bg="white"
-        )
-        wizard_1_name.grid(row=0, column=0, padx=4, pady=4, sticky=W)
-
-        wizard_1_enrollment_no = Label(
-            wizard_1_Frame, text="Enrollment No: 220160212042", font=my_font, bg="white"
-        )
-        wizard_1_enrollment_no.grid(row=1, column=0, padx=4, pady=4, sticky=W)
-
-        wizard_1_course = Label(
-            wizard_1_Frame, text="Course: BCA", font=my_font, bg="white"
-        )
-        wizard_1_course.grid(row=2, column=0, padx=4, pady=4, sticky=W)
-
-        wizard_1_role = Label(
-            wizard_1_Frame, text="Role: Coder", font=my_font, bg="white"
-        )
-        wizard_1_role.grid(row=3, column=0, padx=4, pady=4, sticky=W)
-
-        wizard_1_mail = Label(
-            wizard_1_Frame,
-            text="E-Mail: 220160212042.rachit@gdgu.org",
-            font=my_font,
-            bg="white",
-        )
-        wizard_1_mail.grid(row=4, column=0, padx=4, pady=4, sticky=W)
-
-        wizard_1_skill = Label(
-            wizard_1_Frame,
-            text="Skills: Python with DSA, Full Stack Web Dev",
-            font=my_font,
-            bg="white",
-        )
-        wizard_1_skill.grid(row=5, column=0, padx=4, pady=4, sticky=W)
-
-        # Wizard-2 section - Rhythm
-        wizard_2_Frame = Frame(bg_img, bd=2, relief=RIDGE, bg="white")
-        wizard_2_Frame.place(x=100, y=340, width=700, height=215)
-
-        # wizard-2 image
-        wizard_2_img = Image.open(r"images/Rhythm Gupta.jpeg")
-        wizard_2_img = wizard_2_img.resize((200, 200), Image.LANCZOS)
-        self.wizard_2_photo = ImageTk.PhotoImage(wizard_2_img)
-
-        wizard = Label(wizard_2_Frame, image=self.wizard_2_photo)
-        wizard.place(x=490, y=5, width=200, height=200)
-
-        # wizard-2 details
-        wizard_2_name = Label(
-            wizard_2_Frame, text="Name: Rhythm", font=my_font, bg="white"
-        )
-        wizard_2_name.grid(row=0, column=0, padx=4, pady=4, sticky=W)
-
-        wizard_2_enrollment_no = Label(
-            wizard_2_Frame, text="Enrollment No: 220160212076", font=my_font, bg="white"
-        )
-        wizard_2_enrollment_no.grid(row=1, column=0, padx=4, pady=4, sticky=W)
-
-        wizard_2_course = Label(
-            wizard_2_Frame, text="Course: BCA", font=my_font, bg="white"
-        )
-        wizard_2_course.grid(row=2, column=0, padx=4, pady=4, sticky=W)
-
-        wizard_2_role = Label(
-            wizard_2_Frame, text="Role: Leader, Coder", font=my_font, bg="white"
-        )
-        wizard_2_role.grid(row=3, column=0, padx=4, pady=4, sticky=W)
-
-        wizard_2_mail = Label(
-            wizard_2_Frame,
-            text="E-Mail: 220160212076.rhythm@gdgu.org",
-            font=my_font,
-            bg="white",
-        )
-        wizard_2_mail.grid(row=4, column=0, padx=4, pady=4, sticky=W)
-
-        wizard_2_skill = Label(
-            wizard_2_Frame,
-            text="Skills: Font-end Web Dev, Python, Management",
-            font=my_font,
-            bg="white",
-        )
-        wizard_2_skill.grid(row=5, column=0, padx=4, pady=4, sticky=W)
-
-        # Wizard-3 section - Rahul Sehraya
-        wizard_3_Frame = Frame(bg_img, bd=2, relief=RIDGE, bg="white")
-        wizard_3_Frame.place(x=1100, y=340, width=700, height=215)
-
-        # wizard-3 image
-        wizard_3_img = Image.open(r"images/Rahul Sehraya.jpg")
-        wizard_3_img = wizard_3_img.resize((200, 200), Image.LANCZOS)
-        self.wizard_3_photo = ImageTk.PhotoImage(wizard_3_img)
-
-        wizard = Label(wizard_3_Frame, image=self.wizard_3_photo)
-        wizard.place(x=490, y=5, width=200, height=200)
-
-        # wizard-3 details
-        wizard_3_name = Label(
-            wizard_3_Frame, text="Name: Rahul Sehraya", font=my_font, bg="white"
-        )
-        wizard_3_name.grid(row=0, column=0, padx=4, pady=4, sticky=W)
-
-        wizard_3_enrollment_no = Label(
-            wizard_3_Frame, text="Enrollment No: 220160212023", font=my_font, bg="white"
-        )
-        wizard_3_enrollment_no.grid(row=1, column=0, padx=4, pady=4, sticky=W)
-
-        wizard_3_course = Label(
-            wizard_3_Frame, text="Course: BCA", font=my_font, bg="white"
-        )
-        wizard_3_course.grid(row=2, column=0, padx=4, pady=4, sticky=W)
-
-        wizard_3_role = Label(
-            wizard_3_Frame,
-            text="Role: Coder, Report Management",
-            font=my_font,
-            bg="white",
-        )
-        wizard_3_role.grid(row=3, column=0, padx=4, pady=4, sticky=W)
-
-        wizard_3_mail = Label(
-            wizard_3_Frame,
-            text="E-Mail: 220160212023.rahul@gdgu.org",
-            font=my_font,
-            bg="white",
-        )
-        wizard_3_mail.grid(row=4, column=0, padx=4, pady=4, sticky=W)
-
-        wizard_3_skill = Label(
-            wizard_3_Frame, text="Skills: ", font=my_font, bg="white"
-        )
-        wizard_3_skill.grid(row=5, column=0, padx=4, pady=4, sticky=W)
-
-        # mentor section
-        mentor_Frame = Frame(bg_img, bd=2, relief=RIDGE, bg="white")
-        mentor_Frame.place(x=605, y=600, width=700, height=215)
-
-        # mentor image
-        mentor_img = Image.open(r"Images/Gd Goenka Logo.jpg")
-        mentor_img = mentor_img.resize((200, 200), Image.LANCZOS)
-        self.mentor_photo = ImageTk.PhotoImage(mentor_img)
-
-        wizard = Label(mentor_Frame, image=self.mentor_photo)
-        wizard.place(x=490, y=5, width=200, height=200)
-
-        # Mentor details
-        mentor_name = Label(
-            mentor_Frame, text="Name: Mrs. Manka Sharma", font=my_font, bg="white"
-        )
-        mentor_name.grid(row=0, column=0, padx=4, pady=4, sticky=W)
-
-        mentor_designation = Label(
-            mentor_Frame,
-            text="Position: Assistant Professor GD Goenka University",
-            font=my_font,
-            bg="white",
-        )
-        mentor_designation.grid(row=1, column=0, padx=4, pady=4, sticky=W)
-
-        mentor_mail = Label(
-            mentor_Frame, text="E-Mail: manka.sharma@gdgu.org", font=my_font, bg="white"
-        )
-        mentor_mail.grid(row=2, column=0, padx=4, pady=4, sticky=W)
-
-        mentor_role = Label(mentor_Frame, text="Role: Mentor", font=my_font, bg="white")
-        mentor_role.grid(row=3, column=0, padx=4, pady=4, sticky=W)
-
-        mentor_skill = Label(
-            mentor_Frame,
-            text="Skills: Python Programming, AI/ML, Data Analytics",
-            font=my_font,
-            bg="white",
-        )
-        mentor_skill.grid(row=4, column=0, padx=4, pady=4, sticky=W)
-
+        for i, text in enumerate(labels_info):
+            lbl = Label(frame, text=text, font=self.card_font, bg="white")
+            lbl.grid(row=i, column=0, padx=4, pady=4, sticky=W)
 
 def main() -> None:
-    root = Tk()
-    obj = Developer(root)
+    """Main function to initialize and run the application."""
+    root = tk.Tk()
+    app = Developer(root)
     root.mainloop()
-
 
 if __name__ == "__main__":
     main()
